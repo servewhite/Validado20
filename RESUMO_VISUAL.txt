@@ -1,0 +1,233 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    ANÁLISE DE SCRIPTS HTML - RESUMO VISUAL                   ║
+║                          20 de Fevereiro de 2026                             ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📊 ESTATÍSTICAS GERAIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   Total de Arquivos HTML Analisados: 344
+   ├─ Páginas Principais: 2
+   ├─ Produtos/Promoções: 22
+   ├─ Pagamentos: 7
+   └─ Espelhados/Cache: ~313
+
+
+🔍 SCRIPTS ENCONTRADOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   ✅ UTM Tracking (utms/latest.js)
+      Status: OK
+      Presença: 200+ arquivos [████████████████░░] 59%+
+      Localização: Linha 18-138 (varia por página)
+
+   ✅ Pixel Conversão (pixel/pixel.js)
+      Status: OK
+      Presença: 200+ arquivos [████████████████░░] 59%+
+      Localização: Linha 29-149 (carregamento dinâmico)
+
+   🔴 Checkout Helper (finalizar-pedido-helper.js)
+      Status: CRÍTICO ⚠️
+      Presença: 14 arquivos [██░░░░░░░░░░░░░░░░] 4%
+      FALTANDO: 330 arquivos [██████████████████] 96%
+      
+   ⚠️ PIX Integration (pix-integration*.js)
+      Status: PARCIAL
+      Presença: 158 arquivos [██████████░░░░░░░░] 46%
+      Variações: 3 versões diferentes (3661, modular, .html)
+
+
+📋 COBERTURA POR TIPO DE PÁGINA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   📄 PÁGINA PRINCIPAL (index.html)
+      UTM ✅ | Pixel ✅ | Checkout ❌ | PIX ✅
+      Completude: ███████░░░░░░░░░░░░ 75%
+
+   📦 PRODUTOS (marmita*.html)
+      UTM ✅ | Pixel ✅ | Checkout ✅ | PIX ✅
+      Completude: ████████████████████ 100%
+
+   🎁 PROMOÇÕES (pague-1-leve-2-*.html)
+      UTM ✅ | Pixel ✅ | Checkout ✅ | PIX ✅
+      Completude: ████████████████████ 100%
+
+   💳 PAGAMENTOS (pagamento*.html)
+      UTM ✅ | Pixel ✅ | Checkout ❌ | PIX ✅
+      Completude: ███████░░░░░░░░░░░░ 75%
+
+   🔀 ESPELHADOS/CACHE (br01/, cdn.xtracky.com/, etc.)
+      Status: Fora de sincronização
+      Completude: ████░░░░░░░░░░░░░░░░ 40%+
+
+
+🎯 PROBLEMAS IDENTIFICADOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   🔴 CRÍTICO (Ação Imediata)
+   ┌────────────────────────────────────────────────────────────────────────┐
+   │ ❌ finalizar-pedido-helper.js FALTANDO                                  │
+   │                                                                         │
+   │ Falta em:                                                              │
+   │ • index.html                                                           │
+   │ • TODAS 7 páginas de pagamento                                         │
+   │ • ~313 arquivos espelhados                                             │
+   │                                                                         │
+   │ Risco: Checkout pode não funcionar                                     │
+   │ Impacto: CRÍTICO - Afeta receita                                       │
+   └────────────────────────────────────────────────────────────────────────┘
+
+   🟡 ALTO (Convergir)
+   ┌────────────────────────────────────────────────────────────────────────┐
+   │ ⚠️ pix-integration INCONSISTENTE                                        │
+   │                                                                         │
+   │ Variações encontradas:                                                 │
+   │ • pix-integration3661.js (produtos)                                    │
+   │ • pix-integration.js (modular - página principal)                      │
+   │ • pix-integration.html (pagamentos)                                    │
+   │                                                                         │
+   │ Problema: Difícil manutenção                                           │
+   │ Impacto: MÉDIO - Possível confusão                                     │
+   └────────────────────────────────────────────────────────────────────────┘
+
+   🟠 MÉDIO (Otimizar)
+   ┌────────────────────────────────────────────────────────────────────────┐
+   │ ♻️ Diretórios Espelhados desincronizados                                │
+   │                                                                         │
+   │ Diretórios: br01/, cdn.xtracky.com/, connect.facebook.net/             │
+   │ Arquivos: ~313 (91% do total)                                          │
+   │ Status: Fora de sincronização com principais                           │
+   │                                                                         │
+   │ Impacto: BAIXO - Afeta apenas cache                                    │
+   └────────────────────────────────────────────────────────────────────────┘
+
+
+📋 LISTA DE AÇÕES RECOMENDADAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   FASE 1 - CRÍTICO (Fazer Agora)
+   ─────────────────────────────────────────────────────────────────────────
+   [ ] Adicionar finalizar-pedido-helper.js em index.html
+   [ ] Adicionar finalizar-pedido-helper.js em pagamento1.html
+   [ ] Adicionar finalizar-pedido-helper.js em pagamento2.html
+   [ ] Adicionar finalizar-pedido-helper.js em pagamento3.html
+   [ ] Adicionar finalizar-pedido-helper.js em pagamento6.html
+   [ ] Adicionar finalizar-pedido-helper.js em pagamento7.html
+   [ ] Adicionar finalizar-pedido-helper.js em pagamento8.html
+   [ ] Adicionar finalizar-pedido-helper.js em pagamento9.html
+   [ ] Validar caminhos relativos
+   [ ] Testar em navegador
+
+   Tempo estimado: 30 minutos
+   Criticidade: 🔴 ALTA
+
+   ─────────────────────────────────────────────────────────────────────────
+
+   FASE 2 - PADRONIZAÇÃO (Depois de Fase 1)
+   ─────────────────────────────────────────────────────────────────────────
+   [ ] Decidir versão única de pix-integration
+   [ ] Atualizar todas as referências
+   [ ] Remover versões antigas
+   [ ] Testar PIX em todas as páginas
+
+   Tempo estimado: 20 minutos
+   Criticidade: 🟡 MÉDIA
+
+   ─────────────────────────────────────────────────────────────────────────
+
+   FASE 3 - CACHE (Opcional)
+   ─────────────────────────────────────────────────────────────────────────
+   [ ] Re-sincronizar br01/
+   [ ] Re-sincronizar cdn.xtracky.com/
+   [ ] Re-sincronizar connect.facebook.net/
+
+   Tempo estimado: 30 minutos
+   Criticidade: 🟢 BAIXA
+
+
+💡 CÓDIGO PARA ADICIONAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   Para index.html:
+   ────────────────
+   <script src="js/finalizar-pedido-helper.js"></script>
+
+   Para pagamento*.html:
+   ─────────────────────
+   <script src="../../js/finalizar-pedido-helper.js"></script>
+
+   Posição: ANTES da tag </body>
+
+
+📊 GRÁFICO DE COMPOSIÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   Scripts por Implementação:
+
+        UTM (200+)  ████████████████░░ 59%
+        Pixel (200+) ████████████████░░ 59%
+        PIX (158)   ██████████░░░░░░░░ 46%
+        Checkout(14)██░░░░░░░░░░░░░░░░  4%
+
+   Páginas por Completude:
+
+        Completas (16)    ██░░░░░░░░░░░░░░░░░░  5%
+        Incompletas (328) ██████████████████░░ 95%
+
+
+⏱️ TEMPO ESTIMADO DE IMPLEMENTAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   Fase 1 (Crítico):     30 minutos ⏱️
+   Fase 2 (Padrão):      20 minutos ⏱️
+   Fase 3 (Cache):       30 minutos ⏱️
+   ────────────────────────────────
+   TOTAL:                80 minutos ⏱️ (~1h20min)
+
+
+📈 IMPACTO DA IMPLEMENTAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   ANTES: 🔴
+   ├─ Rastreamento: 59% ✅
+   ├─ Conversão: 59% ✅
+   ├─ Checkout: 4% ❌ CRÍTICO
+   └─ PIX: 46% ⚠️
+
+   DEPOIS: 🟢
+   ├─ Rastreamento: 100% ✅
+   ├─ Conversão: 100% ✅
+   ├─ Checkout: 100% ✅
+   └─ PIX: 100% ✅
+
+
+🎯 CONCLUSÃO FINAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   Status Geral:     ⚠️ PARCIALMENTE FUNCIONAL (75%)
+   
+   Recomendação:     🔴 AÇÃO NECESSÁRIA
+   
+   Urgência:         Implementar HOJE
+   
+   Risco Atual:      ALTO - Checkout pode não funcionar
+   
+   Risco Após Ação:  BAIXO - Sistema funcionará 100%
+
+
+📁 ARQUIVOS DE RELATÓRIO DISPONÍVEIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   1. SUMARIO_EXECUTIVO.txt ............ Resumo para apresentação
+   2. RELATORIO_ANALISE_SCRIPTS.md .... Análise técnica detalhada
+   3. ANALISE_SCRIPTS_DETALHADA.csv ... Dados em planilha
+   4. PLANO_ACAO_DETALHADO.md ........ Como implementar
+   5. ANALISE_SCRIPTS.json .......... Integração automatizada
+   6. INDICE_RELATORIOS.md ......... Navegação de arquivos
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    ANÁLISE COMPLETA - 20/02/2026                            ║
+║                                                                              ║
+║          Próximo Passo: Leia PLANO_ACAO_DETALHADO.md para agir              ║
+╚══════════════════════════════════════════════════════════════════════════════╝

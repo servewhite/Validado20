@@ -1,0 +1,295 @@
+{
+  "analise_scripts": {
+    "data_analise": "2026-02-20",
+    "versao_relatorio": "1.0",
+    "diretorio_raiz": "c:\\Users\\gabri\\Downloads\\clone man\\validadomasao.netlify.app",
+    "total_arquivos_html": 344,
+    
+    "resumo_geral": {
+      "arquivos_completos": {
+        "count": 16,
+        "percentual": 4.7,
+        "criterio": "Possuem todos os 4 scripts"
+      },
+      "arquivos_incompletos": {
+        "count": 328,
+        "percentual": 95.3,
+        "criterio": "Faltam um ou mais scripts"
+      }
+    },
+
+    "scripts_analisados": [
+      {
+        "id": 1,
+        "nome": "UTM Tracking",
+        "url": "https://cdn.utmify.com.br/scripts/utms/latest.js",
+        "presenca_total": 200,
+        "percentual": 58.14,
+        "status": "OK",
+        "observacao": "Limite de busca atingido, provável cobertura maior",
+        "localizacoes_principais": [
+          "index.html (linha 120)",
+          "produtos/marmita/*.html (linha 116-138)",
+          "pagamentos/pagamento*/ (linha 18)"
+        ],
+        "faltas_criticas": []
+      },
+      {
+        "id": 2,
+        "nome": "Pixel de Conversão",
+        "url": "https://cdn.utmify.com.br/scripts/pixel/pixel.js",
+        "presenca_total": 200,
+        "percentual": 58.14,
+        "status": "OK",
+        "metodo_carregamento": "JavaScript Dinâmico",
+        "padrao": "a.setAttribute('src', '...')",
+        "localizacoes_principais": [
+          "index.html (linha 131)",
+          "produtos/marmita/*.html (linha 128)",
+          "pagamentos/pagamento*/ (linha 29)"
+        ],
+        "faltas_criticas": []
+      },
+      {
+        "id": 3,
+        "nome": "Script de Checkout",
+        "arquivo": "finalizar-pedido-helper.js",
+        "presenca_total": 14,
+        "percentual": 4.07,
+        "status": "CRÍTICO",
+        "criticidade": "ALTA",
+        "presenca_em": [
+          "marmita6.html",
+          "marmita7.html",
+          "marmita8.html",
+          "marmita9.html",
+          "pague-1-leve-2-marmita2.html",
+          "pague-1-leve-2-marmita3.html",
+          "pague-1-leve-2-marmita11.html"
+        ],
+        "falta_em": [
+          "index.html",
+          "TODAS as páginas de pagamento (7 arquivos)",
+          "~313 arquivos espelhados"
+        ],
+        "total_faltando": 330,
+        "percentual_faltando": 95.93,
+        "referencia": "<script src=\"../../js/finalizar-pedido-helper.js\"></script>",
+        "recomendacao": "AÇÃO IMEDIATA NECESSÁRIA"
+      },
+      {
+        "id": 4,
+        "nome": "Integração PIX",
+        "arquivos": [
+          "pix-integration.js",
+          "pix-integration3661.js",
+          "pix-integration.html"
+        ],
+        "presenca_total": 158,
+        "percentual": 45.93,
+        "status": "PARCIAL",
+        "criticidade": "MÉDIA",
+        "variacoes": [
+          {
+            "tipo": "Versão 3661",
+            "uso": "Páginas de produto",
+            "referencia": "<script src=\"../../js/pix-integration3661.js?v=2.0\" defer></script>",
+            "linha_tipica": 753,
+            "count": 14
+          },
+          {
+            "tipo": "Módulo ES6",
+            "uso": "Página principal",
+            "referencia": "<script src=\"js/pix-integration.js\" type=\"module\"></script>",
+            "linha_tipica": 6712,
+            "count": 2
+          },
+          {
+            "tipo": "Arquivo HTML",
+            "uso": "Páginas de pagamento",
+            "referencia": "<script src=\"../../js/pix-integration.html\"></script>",
+            "linha_tipica": 1205,
+            "count": 7
+          }
+        ],
+        "recomendacao": "Unificar em uma única versão",
+        "inconsistencia": "Três variações diferentes encontradas"
+      }
+    ],
+
+    "analise_por_tipo_pagina": {
+      "pagina_principal": {
+        "arquivos": ["index.html", "title_Instagram_.html"],
+        "scripts": {
+          "utm_latest": "SIM",
+          "pixel": "SIM",
+          "checkout": "NÃO",
+          "pix": "SIM"
+        },
+        "status": "INCOMPLETO",
+        "completude": "75%"
+      },
+      "produto": {
+        "arquivos": ["marmita6.html", "marmita7.html", "marmita8.html", "marmita9.html"],
+        "variantes": "com sufixo -2",
+        "scripts": {
+          "utm_latest": "SIM",
+          "pixel": "SIM",
+          "checkout": "SIM",
+          "pix": "SIM"
+        },
+        "status": "COMPLETO",
+        "completude": "100%"
+      },
+      "promocao": {
+        "arquivos": ["pague-1-leve-2-marmita2.html", "pague-1-leve-2-marmita3.html", "pague-1-leve-2-marmita11.html"],
+        "variantes": "com sufixo -2",
+        "scripts": {
+          "utm_latest": "SIM",
+          "pixel": "SIM",
+          "checkout": "SIM",
+          "pix": "SIM"
+        },
+        "status": "COMPLETO",
+        "completude": "100%"
+      },
+      "pagamento": {
+        "arquivos": ["pagamentos/pagamento{1,2,3,6,7,8,9}/"],
+        "total": 7,
+        "scripts": {
+          "utm_latest": "SIM",
+          "pixel": "SIM",
+          "checkout": "NÃO",
+          "pix": "SIM"
+        },
+        "status": "INCOMPLETO",
+        "completude": "75%",
+        "falta_critica": "finalizar-pedido-helper.js"
+      }
+    },
+
+    "arquivos_problemáticos": {
+      "sem_checkout": {
+        "total": 330,
+        "criticidade": "CRÍTICA",
+        "lista_expandida": [
+          {
+            "arquivo": "index.html",
+            "tipo": "Página Principal",
+            "caminho_relativo_necessario": "js/finalizar-pedido-helper.js"
+          },
+          {
+            "arquivo": "pagament*.html",
+            "tipo": "Pagamentos",
+            "quantidade": 7,
+            "caminho_relativo_necessario": "../../js/finalizar-pedido-helper.js",
+            "aviso": "Verificar se 2 níveis (../) está correto!"
+          },
+          {
+            "arquivo": "Arquivos espelhados",
+            "tipo": "Cache/Espelhos",
+            "quantidade": 313,
+            "diretórios": ["br01/", "cdn.xtracky.com/", "connect.facebook.net/"]
+          }
+        ]
+      },
+      "pix_inconsistente": {
+        "total": 158,
+        "problema": "3 variações diferentes de carregamento",
+        "impacto": "Possível confusão e manutenção difícil"
+      }
+    },
+
+    "diretorios_espelhados": {
+      "total": 3,
+      "lista": [
+        {
+          "nome": "br01",
+          "caminho": "validadomasao.netlify.app/br01/",
+          "tipo": "HTTrack Mirror",
+          "arquivos_aproximados": 100,
+          "status": "Fora de sync"
+        },
+        {
+          "nome": "cdn.xtracky.com",
+          "caminho": "validadomasao.netlify.app/cdn.xtracky.com/",
+          "tipo": "Cache Externo",
+          "arquivos_aproximados": 110,
+          "status": "Fora de sync"
+        },
+        {
+          "nome": "connect.facebook.net",
+          "caminho": "validadomasao.netlify.app/connect.facebook.net/",
+          "tipo": "Cache Externo",
+          "arquivos_aproximados": 103,
+          "status": "Fora de sync"
+        }
+      ]
+    },
+
+    "acoes_recomendadas": [
+      {
+        "prioridade": "CRÍTICA",
+        "id": 1,
+        "titulo": "Adicionar finalizar-pedido-helper.js",
+        "descricao": "Adicionar script de checkout em páginas que faltam",
+        "arquivos_afetados": [
+          "index.html",
+          "pagamentos/pagamento1/pagamento1.html",
+          "pagamentos/pagamento2/pagamento2.html",
+          "pagamentos/pagamento3/pagamento3.html",
+          "pagamentos/pagamento6/pagamento6.html",
+          "pagamentos/pagamento7/pagamento7.html",
+          "pagamentos/pagamento8/pagamento8.html",
+          "pagamentos/pagamento9/pagamento9.html"
+        ],
+        "tempo_estimado": "15 minutos",
+        "impacto": "ALTA"
+      },
+      {
+        "prioridade": "MÉDIA",
+        "id": 2,
+        "titulo": "Unificar pix-integration",
+        "descricao": "Usar uma única versão de pix-integration em todo o site",
+        "opcoes": [
+          "pix-integration.js (modular)",
+          "pix-integration3661.js (versão 3661)"
+        ],
+        "tempo_estimado": "20 minutos",
+        "impacto": "MÉDIA"
+      },
+      {
+        "prioridade": "MÉDIA",
+        "id": 3,
+        "titulo": "Validar caminhos relativos",
+        "descricao": "Testar se caminhos ../../js/ resolvem corretamente",
+        "arquivos_testados": ["pagamentos/pagamento1/pagamento1.html"],
+        "tempo_estimado": "10 minutos",
+        "impacto": "MÉDIA"
+      },
+      {
+        "prioridade": "BAIXA",
+        "id": 4,
+        "titulo": "Sincronizar espelhados",
+        "descricao": "Atualizar diretórios br01/, cdn.xtracky.com/, connect.facebook.net/",
+        "tempo_estimado": "30 minutos",
+        "impacto": "BAIXA"
+      }
+    ],
+
+    "estatisticas": {
+      "cobertura_scripts": {
+        "utm_latest": "59%",
+        "pixel": "59%",
+        "checkout": "4%",
+        "pix": "46%"
+      },
+      "paginas_completas": "4.7%",
+      "paginas_incompletas": "95.3%",
+      "criticos": {
+        "faltando_checkout": 330,
+        "percentual": "95.93%"
+      }
+    }
+  }
+}

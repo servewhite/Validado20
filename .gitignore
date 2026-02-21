@@ -1,0 +1,4 @@
+# APENAS IGNORAR ESSENCIAL
+node_modules/
+.env
+

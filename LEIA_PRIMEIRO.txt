@@ -1,0 +1,64 @@
+ANÁLISE DE SCRIPTS HTML - SUMÁRIO FINAL RÁPIDO
+===============================================
+
+📍 LOCAL: c:\Users\gabri\Downloads\clone man\validadomasao.netlify.app
+
+📊 NÚMEROS PRINCIPAIS:
+- Total de arquivos HTML: 344
+- Com UTM tracking: 200+ (59%)
+- Com Pixel: 200+ (59%)
+- Com Checkout: 14 (4%) ❌ CRÍTICO!
+- Com PIX: 158 (46%)
+
+🔴 CRÍTICO - O QUÊ FALTA:
+O script "finalizar-pedido-helper.js" está faltando em 96% dos arquivos incluindo:
+1. TODAS as 7 páginas de pagamento
+2. A página principal (index.html)
+3. ~313 arquivos espelhados
+
+⚠️ CONSEQUÊNCIA:
+O checkout pode não funcionar em maioria das páginas!
+
+✅ SOLUÇÃO RÁPIDA (30 minutos):
+Adicionar esta linha em 8 arquivos:
+
+Para index.html:
+<script src="js/finalizar-pedido-helper.js"></script>
+
+Para pagamento1 até pagamento9:
+<script src="../../js/finalizar-pedido-helper.js"></script>
+
+📋 ARQUIVOS A MODIFICAR:
+1. validadomasao.netlify.app/index.html
+2. validadomasao.netlify.app/produtos/marmita/pagamentos/pagamento1/pagamento1.html
+3. validadomasao.netlify.app/produtos/marmita/pagamentos/pagamento2/pagamento2.html
+4. validadomasao.netlify.app/produtos/marmita/pagamentos/pagamento3/pagamento3.html
+5. validadomasao.netlify.app/produtos/marmita/pagamentos/pagamento6/pagamento6.html
+6. validadomasao.netlify.app/produtos/marmita/pagamentos/pagamento7/pagamento7.html
+7. validadomasao.netlify.app/produtos/marmita/pagamentos/pagamento8/pagamento8.html
+8. validadomasao.netlify.app/produtos/marmita/pagamentos/pagamento9/pagamento9.html
+
+🎯 STATUS ATUAL:
+- Páginas de produto: ✅ Todas OK
+- Páginas de promoção: ✅ Todas OK
+- Páginas de pagamento: ❌ FALTAM CHECKOUT
+- Página principal: ❌ FALTA CHECKOUT
+
+📁 RELATÓRIOS DISPONÍVEIS:
+- INDICE_RELATORIOS.md ........... Leia aqui primeiro!
+- PLANO_ACAO_DETALHADO.md ....... Como implementar
+- SUMARIO_EXECUTIVO.txt ......... Para apresentar
+- RELATORIO_ANALISE_SCRIPTS.md .. Documentação completa
+- ANALISE_SCRIPTS_DETALHADA.csv . Dados em Excel
+- ANALISE_SCRIPTS.json ......... Para automação
+- RESUMO_VISUAL.txt ............ Visual com tabelas
+
+🎯 AÇÃO RECOMENDADA:
+1. Leia PLANO_ACAO_DETALHADO.md para instruções detalhadas
+2. Adicione os 8 scripts
+3. Teste o checkout em navegador
+4. Pronto!
+
+⏱️ Tempo total: ~30 minutos
+
+Análise realizada: 20/02/2026

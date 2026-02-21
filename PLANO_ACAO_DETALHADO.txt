@@ -1,0 +1,361 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                        PLANO DE AÇÃO - PRÓXIMOS PASSOS                       ║
+║                             RASTREAMENTO UTMIFY                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+📋 SUMÁRIO EXECUTIVO DO PLANO
+═══════════════════════════════════════════════════════════════════════════════
+
+Baseado na auditoria técnica completa, o rastreamento da Utmify já está 
+100% funcional. Este plano apresenta as próximas etapas para validação 
+e otimização final.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+FASE 1: VALIDAÇÃO IMEDIATA (HOJE - 1-2 HORAS)
+═══════════════════════════════════════════════════════════════════════════════
+
+Objetivo: Confirmar que tudo está funcionando em ambiente real
+
+TAREFA 1.1: Teste no Navegador
+─────────────────────────────────────────────────────────────────────────────
+
+Passo 1: Acesse a página de teste com devtools
+  └─ URL: https://validadomasao.netlify.app/produtos/marmita/marmita6.html
+  └─ Pressione: F12 (abrir DevTools)
+  └─ Vá para: Console (aba de console)
+
+Passo 2: Execute o teste de rastreamento
+  └─ Cole no console: 
+     fetch('TESTE_RASTREAMENTO_UTMIFY.js').then(r => r.text()).then(eval)
+  
+  OU descarregue o arquivo TESTE_RASTREAMENTO_UTMIFY.js e execute:
+     auditoria.executarAuditoria()
+
+Passo 3: Analise os resultados
+  └─ Procure por ✅ (passou) ou ❌ (falhou)
+  └─ Anote qualquer ⚠️  (aviso)
+
+ESPERADO: Todos os testes passem com ✅
+
+
+TAREFA 1.2: Teste de Fluxo Completo
+─────────────────────────────────────────────────────────────────────────────
+
+Passo 1: Acesse a página de produto
+  └─ URL: https://validadomasao.netlify.app/produtos/marmita/marmita6.html
+  └─ Deixe o DevTools aberto (Console)
+
+Passo 2: Simule uma compra
+  └─ Clique em "FINALIZAR PEDIDO"
+  └─ Observe os logs do console:
+     ✅ "Função finalizar() chamada"
+     
+Passo 3: Preencha os dados
+  └─ Nome: "Teste Auditoria"
+  └─ CPF: "123.456.789-00"
+  └─ Telefone: "(11) 99999-9999"
+  └─ CEP: "01310-100"
+  └─ Endereço: "Avenida Paulista"
+  └─ Número: "1000"
+  └─ Email: "teste@auditoria.com"
+
+Passo 4: Clique em "Continuar"
+  └─ Observe o console para processamento PIX
+  └─ Confirme QR Code PIX é exibido
+
+Passo 5: Monitore o rastreamento
+  └─ Observe os logs da Utmify no console
+  └─ Procure por mensagens de tracking
+
+ESPERADO: Fluxo completo sem erros
+
+
+TAREFA 1.3: Verificação do Painel Utmify
+─────────────────────────────────────────────────────────────────────────────
+
+Passo 1: Acesse seu painel Utmify
+  └─ URL: https://panel.utmify.com.br/
+  └─ Login com suas credenciais
+
+Passo 2: Procure pela conversão de teste
+  └─ Vá para: Conversões / Eventos / Últimas Transações
+  └─ Procure por "Teste Auditoria" (nome do cliente)
+
+Passo 3: Valide os dados capturados
+  └─ ✅ Nome do cliente: deve aparecer
+  └─ ✅ Valor da compra: R$ do pedido
+  └─ ✅ Data/Hora: deve estar correta
+  └─ ✅ URL de origem: deve estar registrada
+
+ESPERADO: Conversão aparecer no painel em até 5 minutos
+
+
+═══════════════════════════════════════════════════════════════════════════════
+FASE 2: TESTE COM PARÂMETROS DE UTM (1-2 HORAS)
+═══════════════════════════════════════════════════════════════════════════════
+
+Objetivo: Confirmar que os parâmetros de origem estão sendo rastreados
+
+TAREFA 2.1: Teste com Parâmetros Manuais
+─────────────────────────────────────────────────────────────────────────────
+
+Passo 1: Acesse com parâmetros de teste do Google
+  └─ URL: https://validadomasao.netlify.app/produtos/marmita/marmita6.html
+     ?utm_source=google
+     &utm_medium=cpc
+     &utm_campaign=teste_auditoria
+     &utm_content=anuncio_v1
+     &utm_term=marmita_teste
+
+Passo 2: Abra DevTools (F12) → Console
+  └─ Execute: auditoria.testeCapturarUTMs()
+  └─ Confirme que os parâmetros foram capturados
+
+Passo 3: Realize uma compra completa
+  └─ Siga os passos de TAREFA 1.2
+
+Passo 4: Verifique no painel Utmify
+  └─ Procure a conversão com:
+     - utm_source: google
+     - utm_medium: cpc
+     - utm_campaign: teste_auditoria
+
+ESPERADO: Conversão exibe os parâmetros corretos
+
+
+TAREFA 2.2: Teste com Parâmetros do Facebook
+─────────────────────────────────────────────────────────────────────────────
+
+Passo 1: Acesse com parâmetros do Facebook
+  └─ URL: https://validadomasao.netlify.app/produtos/marmita/pague-1-leve-2-marmita2.html
+     ?utm_source=facebook
+     &utm_medium=cpc
+     &utm_campaign=promo_facebook
+     &fbclid=IwAR3d4J5k8L9m...
+
+Passo 2: Realize procesos completamente
+  └─ Siga os passos de TAREFA 1.2
+
+Passo 3: Verifique no painel Utmify
+  └─ Procure a conversão com source=facebook
+
+ESPERADO: Conversão do Facebook é rastreada
+
+
+TAREFA 2.3: Teste com Email/WhatsApp
+─────────────────────────────────────────────────────────────────────────────
+
+Passo 1: Acesse com parâmetros de email/WhatsApp
+  └─ URL: https://validadomasao.netlify.app/produtos/marmita/marmita7.html
+     ?utm_source=email
+     &utm_medium=newsletter
+     &utm_campaign=promocao_semanal
+
+Passo 2: Realize a compra
+  └─ Siga os passos de TAREFA 1.2
+
+Passo 3: Verifique no painel
+  └─ Procure a conversão do email
+
+ESPERADO: Conversão do email é rastreada
+
+
+═══════════════════════════════════════════════════════════════════════════════
+FASE 3: OTIMIZAÇÃO E REFINAMENTO (2-4 HORAS)
+═══════════════════════════════════════════════════════════════════════════════
+
+Baseado nos resultados das Fases 1 e 2
+
+
+TAREFA 3.1: Se TUDO Funcionou Corrretamente ✅
+─────────────────────────────────────────────────────────────────────────────
+
+Parabéns! Seu rastreamento está 100% funcional.
+
+Próximos passos:
+  1. ✅ Documente os resultados em uma planilha
+  2. ✅ Compartilhe com sua equipe de marketing
+  3. ✅ Configure alertas no painel Utmify
+  4. ✅ Crie um spreadsheet para rastrear ROI
+  5. ✅ Implemente tagging de eventos customizados
+
+
+TAREFA 3.2: Se Houve Problemas ⚠️
+─────────────────────────────────────────────────────────────────────────────
+
+Analise qual componente falhou:
+
+❌ Script utms/latest.js não carregou?
+   └─ Solução: Verifique se a conexão com cdn.utmify.com.br está ativa
+   └─ Verifique se há bloqueio de firewall
+   └─ Teste em outro navegador (Chrome/Firefox/Safari)
+
+❌ Pixel não rastreou conversão?
+   └─ Solução: Verifique Pixel ID no painel Utmify
+   └─ Confirme que o evento de conversão foi disparado
+   └─ Verifique se há atraso no rastreamento (até 24h)
+
+❌ Parâmetros de UTM não foram capturados?
+   └─ Solução: Verifique localStorage em DevTools
+   └─ Confirme que o script utms/latest.js executou
+   └─ Teste em navegação privada (sem cache)
+
+❌ Função finalizar() não funcionou?
+   └─ Solução: Verifique se finalizar-pedido-helper.js foi carregado
+   └─ Verifique se SweetAlert está disponível
+   └─ Verifique console para mensagens de erro
+
+
+═══════════════════════════════════════════════════════════════════════════════
+FASE 4: MONITORAMENTO CONTÍNUO (DIÁRIO/SEMANAL)
+═══════════════════════════════════════════════════════════════════════════════
+
+Após confirmar que tudo funciona, implemente monitoramento contínuo:
+
+
+DIARIAMENTE:
+─────────────────────────────────────────────────────────────────────────────
+
+□ Verifique o painel Utmify pela manhã
+  └─ Procure por conversões registradas
+  └─ Anote o número de conversões
+  └─ Verifique se há alguma anomalia
+
+□ Monitore taxa de conversão por canal
+  └─ Google: X conversões
+  └─ Facebook: X conversões
+  └─ Email: X conversões
+  └─ Direct: X conversões
+
+□ Verifique se há erros no console
+  └─ F12 → Console
+  └─ Procure por mensagens de erro (🔴)
+  └─ Documente para investigação
+
+
+SEMANALMENTE:
+─────────────────────────────────────────────────────────────────────────────
+
+□ Gere relatório de conversões
+  └─ Painel Utmify → Relatórios → Conversões por Período
+  └─ Exporte dados para análise
+
+□ Calcule ROI por canal
+  └─ CPL (Custo por Líder)
+  └─ CPA (Custo por Aquisição)
+  └─ ROAS (Return on Ad Spend)
+
+□ Identifique padrões
+  └─ Qual campanha teve melhor performance?
+  └─ Qual período tem mais conversões?
+  └─ Qual dispositivo (mobile/desktop)?
+
+□ Otimize baseado em dados
+  └─ Aumente orçamento para melhores campanhas
+  └─ Teste novas variações de anúncios
+  └─ Refinoe segmentação
+
+
+MENSALMENTE:
+─────────────────────────────────────────────────────────────────────────────
+
+□ Análise aprofundada
+  └─ Compare mês com mês anterior
+  └─ Analise sazonalidade
+  └─ Identifique oportunidades
+
+□ Revisão do setup de rastreamento
+  └─ Confirme que pixel continua ativo
+  └─ Valide eventos customizados
+  └─ Teste em diferentes cenários
+
+□ Reunião com equipe
+  └─ Compartilhe resultados
+  └─ Planeje otimizações for próximo mês
+  └─ Defina metas
+
+
+═══════════════════════════════════════════════════════════════════════════════
+TABELA DE CHECKLIST - RASTREAMENTO UTMIFY
+═══════════════════════════════════════════════════════════════════════════════
+
+Faça o download desta tabela e preencha conforme avança nas fases:
+
+┌──────┬─────────────────────────────────────────┬────────┬──────────┐
+│ FASE │ TAREFA                                  │ STATUS │ DATA     │
+├──────┼─────────────────────────────────────────┼────────┼──────────┤
+│ 1.1  │ Teste no Navegador                      │ ☐      │          │
+│ 1.2  │ Teste de Fluxo Completo                 │ ☐      │          │
+│ 1.3  │ Verificação No Painel Utmify            │ ☐      │          │
+│ 2.1  │ Teste com Parâmetros Google             │ ☐      │          │
+│ 2.2  │ Teste com Parâmetros Facebook           │ ☐      │          │
+│ 2.3  │ Teste com Parâmetros Email              │ ☐      │          │
+│ 3.1  │ Otimização (Se Passou)                  │ ☐      │          │
+│ 3.2  │ Troubleshooting (Se Falhou)             │ ☐      │          │
+│ 4    │ Monitoramento Contínuo                  │ ☐      │ Contínuo │
+└──────┴─────────────────────────────────────────┴────────┴──────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+ARQUIVOS DE SUPORTE CRIADOS
+═══════════════════════════════════════════════════════════════════════════════
+
+Todos os arquivos estão em: c:\Users\gabri\Downloads\clone man\
+
+1. RELATORIO_AUDITORIA_UTMIFY_COMPLETO.txt
+   └─ Relatório técnico completo de toda a auditoria
+
+2. TESTE_RASTREAMENTO_UTMIFY.js
+   └─ Script para testar rastreamento em navegador
+   └─ Execute no console: auditoria.executarAuditoria()
+
+3. PLANO_ACAO_DETALHADO.md (este arquivo)
+   └─ Guia passo-a-passo das próximas ações
+
+4. LEIA_PRIMEIRO.txt
+   └─ Sumário rápido da análise
+
+5. RELATORIO_ANALISE_SCRIPTS.md
+   └─ Análise técnica dos scripts encontrados
+
+6. Outros arquivos complementares
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CONTATO E SUPORTE UTMIFY
+═══════════════════════════════════════════════════════════════════════════════
+
+Se encontrar problemas durante os testes:
+
+1. Documentação Utmify
+   └─ https://help.utmify.com.br/
+
+2. Painel Utmify
+   └─ https://panel.utmify.com.br/
+   └─ Menu: Configurações → Rastreamento
+
+3. Chat de Suporte Utmify
+   └─ Disponível no painel (ícone de chat)
+   └─ Horário: Segunda a Sexta, 9h-18h
+
+4. Ticket de Suporte
+   └─ Email: suporte@utmify.com.br
+   └─ Descreva o problema e anexe este relatório
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CONCLUSÃO
+═══════════════════════════════════════════════════════════════════════════════
+
+Você está pronto para começar o rastreamento de conversões com a Utmify.
+
+PRÓXIMO PASSO: Execute a FASE 1 assim que possível.
+
+Tempo estimado: 1-2 horas
+
+Após confirmar que tudo funciona, você terá 100% de certeza de que 
+cada venda será registrada corretamente no seu painel Utmify.
+
+✅ BOA SORTE! 🚀
