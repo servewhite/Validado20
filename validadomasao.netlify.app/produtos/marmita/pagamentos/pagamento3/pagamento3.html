@@ -1,0 +1,1337 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<!-- Mirrored from deliverynopontodogosto.pages.dev/produtos/marmita/pagamentos/pagamento3/pagamento3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Jan 2026 00:12:06 GMT -->
+<!-- Added by HTTrack -->
+<!-- Mirrored from validadomasao.netlify.app/produtos/marmita/pagamentos/pagamento3/pagamento3 by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 15 Feb 2026 01:43:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>No ponto do Gosto - Checkout</title>
+  <link rel="stylesheet" href="style.css">
+
+
+<!-- Utmify Pixel Tracking -->
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+<script>
+window.pixelId = "699107dcd867ac14ee97d0d4";
+var a = document.createElement("script");
+a.setAttribute("async", "");
+a.setAttribute("defer", "");
+a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+document.head.appendChild(a);
+</script>
+</head>
+<body>
+
+  <div class="logo-header-wrapper">
+    <div class="logo-header">
+      <div class="topbar">
+        <img class="checkout-logo" alt="Logo No ponto do Gosto" src="../../../../../files.catbox.moe/zs2gcb.png">
+        <img class="safe-payment" src="img/safe-payment.svg" alt="Pagamento 100% Seguro">
+      </div>
+    </div>
+  </div>
+
+  <div class="mensagem-wrapper">
+    <div class="mensagem">
+      Assim que sua compra for concluída,<br>
+      <strong>enviaremos o status via WhatsApp e SMS.</strong>
+    </div>
+  </div>
+
+    <div id="modal-seguro" class="modal-seguro" style="display: none;">
+    <div class="modal-conteudo">
+      <span class="fechar" onclick="fecharModalSeguro()">×</span>
+      <div class="topo">
+        <img src="img/safe.svg" alt="Seguro" class="icone-topo">
+        <h2><strong>Não se preocupe, aqui é <span class="verde">seguro!</span></strong></h2>
+        <p>A loja que você está comprando utiliza um ambiente protegido para processar o seu pagamento de forma <strong>100% segura</strong>, com criptografia de ponta a ponta.</p>
+      </div>
+
+      <h4>Ficou curioso? Veja como te protegemos:</h4>
+
+      <div class="item">
+        <img src="img/seguro-cripto.svg" alt="">
+        <div>
+          <strong>Ambiente criptografado</strong>
+          <p>Sua compra é processada em um ambiente de alta segurança.</p>
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="img/seguro-monitoramento.svg" alt="">
+        <div>
+          <strong>Monitoramento 24/7</strong>
+          <p>Sistema monitorado 24 horas por dia, 7 dias por semana.</p>
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="img/seguro-antifraude.svg" alt="">
+        <div>
+          <strong>Antifraude dedicado</strong>
+          <p>Impossível ocorrer fraude. Nenhum dado sensível é armazenado.</p>
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="img/seguro-ssl.svg" alt="">
+        <div>
+          <strong>Certificados SSL</strong>
+          <p>Transações fora de rede segura são automaticamente bloqueadas.</p>
+        </div>
+      </div>
+
+      <button onclick="fecharModalSeguro()" class="btn-verde">Estou seguro!</button>
+    </div>
+  </div>
+
+<script>
+function abrirModalSeguro() {
+  document.getElementById("modal-seguro").style.display = "flex";
+}
+function fecharModalSeguro() {
+  document.getElementById("modal-seguro").style.display = "none";
+}
+function irParaEntrega() {
+  // Troca as etapas visualmente
+  const etapas = document.querySelectorAll(".etapas .etapa");
+  etapas[0].classList.remove("ativa");
+  etapas[1].classList.add("ativa");
+
+  // Oculta identificação e mostra entrega (ajuste conforme suas classes reais)
+  document.querySelector(".container-wrapper .container").style.display = "none";  document.querySelector(".entrega-wrapper").style.display = "block";
+}
+function irParaPagamento(event) {
+  event.preventDefault();
+  const etapas = document.querySelectorAll(".etapas .etapa");
+  etapas[1].classList.remove("ativa");
+  etapas[2].classList.add("ativa");
+  document.querySelector(".entrega-wrapper").style.display = "none";
+  document.querySelector(".container-wrapper").style.display = "block";
+  // Aqui você pode futuramente exibir o conteúdo da etapa de pagamento
+}
+</script>
+<script>
+ const checkboxSemEmail = document.getElementById("semEmail");
+const campoEmail = document.getElementById("email");
+
+if (checkboxSemEmail) {
+  checkboxSemEmail.addEventListener("change", function () {
+    if (this.checked) {
+      campoEmail.value = "Não tenho email";
+      campoEmail.disabled = true;
+      campoEmail.removeAttribute("required");
+      campoEmail.classList.remove("input-error");
+      const erro = campoEmail.nextElementSibling;
+      if (erro && erro.classList.contains("invalid-feedback")) {
+        erro.style.display = "none";
+      }
+    } else {
+      campoEmail.value = "";
+      campoEmail.disabled = false;
+      campoEmail.setAttribute("required", "required");
+    }
+    });
+  }
+</script>
+<div class="resumo">
+  <h3>Seu carrinho</h3>
+
+  <div class="linha-produto">
+    <img src="img/marmita3.jpg" alt="Feijoada">
+    <div class="detalhes">
+      <strong>Kit Familia 3 Grande Com Churrasco</strong>
+      <small>No ponto do Gosto</small>
+    </div>
+    <div class="quantidade-box">
+      <button onclick="alterarQuantidade(-1)">−</button>
+      <span id="quantidade">1</span>
+      <button class="mais" onclick="alterarQuantidade(1)">+</button>
+    </div>
+  </div>
+
+  <!-- ✅ Esse fica FORA da linha-produto -->
+  <div id="ofertas-adquiridas">
+    <!-- As ofertas selecionadas aparecerão aqui -->
+  </div>
+
+  <!-- ✅ Totais também FORA da linha-produto -->
+  <div class="totais">
+    <div class="linha-total">
+      <span>Subtotal</span>
+      <span id="subtotal">R$ 36,90</span>
+    </div>
+    <div class="linha-total">
+      <span>Frete</span>
+      <span id="frete-texto">-</span>
+    </div>
+    <div class="linha-total total">
+      <span>Total</span>
+      <span id="preco">R$ 36,90</span>
+    </div>
+  </div>
+</div>
+
+  <div class="etapas-wrapper">
+    <div class="etapas">
+      <div class="etapa ativa"><span>1</span><div>Identificação</div></div>
+      <div class="etapa"><span>2</span><div>Entrega</div></div>
+      <div class="etapa"><span>3</span><div>Pagamento</div></div>
+    </div>
+  </div>
+
+<div class="entrega-wrapper" style="display: none; padding: 16px; max-width: 500px; margin: 16px auto;">
+  <div class="container">
+    <h2>Entrega</h2>
+    <form class="form-entrega">
+      <label for="cep">CEP</label>
+      <input type="text" id="cep" placeholder="12345-000" required>
+      <div class="invalid-feedback" style="display: none;"><img src="img/error_cupom.svg" alt="Erro">Informe os dados</div>
+
+      <label for="endereco">Endereço</label>
+      <input type="text" id="endereco" placeholder="Rua, Avenida, Alameda" required>
+      <div class="invalid-feedback" style="display: none;"><img src="img/error_cupom.svg" alt="Erro">Informe os dados</div>
+
+<div class="numero-wrapper">
+  <div class="campo-numero">
+    <label for="numero">Número</label>
+    <input type="text" id="numero" placeholder="3213" required>
+    <div class="invalid-feedback" style="display: none;"><img src="img/error_cupom.svg" alt="Erro">Informe os dados</div>
+  </div>
+  <div class="campo-sn">
+    <label style="margin-top: 30px;">
+      <input type="checkbox" id="semNumero"> S/N
+    </label>
+  </div>
+</div>
+
+      <label for="complemento">Complemento</label>
+      <input type="text" id="complemento" placeholder="Apartamento, unidade, prédio, andar">
+
+      <label for="bairro">Bairro</label>
+      <input type="text" id="bairro" placeholder="Centro" required>
+      <div class="invalid-feedback" style="display: none;"><img src="img/error_cupom.svg" alt="Erro">Informe os dados</div>
+
+      <label for="cidade">Cidade</label>
+      <input type="text" id="cidade" placeholder="Cidade" required>
+
+<label for="estado">Estado</label>
+<input type="text" id="estado" placeholder="Estado" required>
+<div class="invalid-feedback" style="display: none;">
+  <img src="img/error_cupom.svg" alt="Erro">Informe os dados
+</div>
+
+      <label for="pais">País</label>
+      <select id="pais">
+        <option selected>Brasil</option>
+        <!-- outros países -->
+      </select>
+
+      <div class="frete-info">
+        <strong>Escolha o melhor frete para você</strong>
+        <p>Preencha seu CEP para encontrar o melhor frete.<br>Após preenchido, encontraremos as melhores opções pra você.</p>
+      </div>
+
+      <button type="button" class="btn-verde" onclick="validarEntregaAntesPagamento(event)">IR PARA O PAGAMENTO</button>
+<button type="button" class="btn-voltar" onclick="voltarParaDados()">VOLTAR</button>
+
+    </form>
+  </div>
+</div>
+
+
+
+
+
+<script>
+function confirmarPagamento() {
+  const dados = coletarDadosCliente();
+  if (!dados || !dados.nome || !dados.telefone) return;
+
+  const primeiroNome = dados.nome.split(" ")[0];
+  const telefoneLimpo = dados.telefone.replace(/\D/g, '');
+
+  fetch("https://api.z-api.io/instances/3E3D91F948A2E0FD667D1681C9B3649F/token/EB1D279C40DA749B9E7E4BF5/send-text", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "client-token": "Fe33cc5abf7a9494d8dce388fb0bab256S"
+    },
+    body: JSON.stringify({
+      phone: telefoneLimpo.startsWith("55") ? telefoneLimpo : `55${telefoneLimpo}`,
+      message: `✅ Olá *${primeiroNome}*! Recebemos sua sinalização de pagamento. Se ele for confirmado, você receberá atualizações em até 5 minutos no link: https://deliverynopontodogosto.pages.dev/rastreio/`
+    })
+  })
+  .then(res => res.json())
+  .then(res => {
+    console.log("📤 Confirmação enviada:", res);
+    Swal.fire({
+      icon: 'success',
+      title: 'Mensagem enviada no WhatsApp!',
+      text: 'Enviamos uma confirmação para seu número. Se o pagamento for confirmado, seu pedido será atualizado em até 5 minutos.',
+      timer: 8000,
+  showConfirmButton: false,
+  didOpen: (popup) => {
+    const container = popup.closest('.swal2-container');
+    if (container) {
+      container.style.zIndex = '11000'; // fica acima do overlay do PIX
+    }
+  }
+    });
+  })
+  .catch(err => {
+    console.error("❌ Erro ao enviar confirmação:", err);
+    Swal.fire({
+      icon: 'error',
+      title: 'Erro',
+      text: 'Não foi possível enviar a confirmação. Tente novamente.',
+      timer: 3000,
+      showConfirmButton: false
+    });
+  });
+}
+</script>
+
+</body>
+
+<!-- Mirrored from deliverynopontodogosto.pages.dev/produtos/marmita/pagamentos/pagamento3/pagamento3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Jan 2026 00:12:08 GMT -->
+
+<!-- Mirrored from validadomasao.netlify.app/produtos/marmita/pagamentos/pagamento3/pagamento3 by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 15 Feb 2026 01:43:53 GMT -->
+</html>
+
+<div class="container-wrapper">
+<div class="container">
+  <form class="form" onsubmit="validarFormulario(event);" novalidate>
+    <label for="email">E-mail</label>
+    <input type="text" id="email" placeholder="email@dominio.com" autocomplete="off" oninput="sugerirEmails()" required>
+    <div class="invalid-feedback" style="display:none"><img src="img/error_cupom.svg" alt="Erro">Informe os dados</div>
+    <ul id="sugestoes"></ul>
+    <label for="semEmail" class="checkbox-label">
+  <input type="checkbox" id="semEmail" onchange="toggleSemEmail(this)">
+  <span class="texto-checkbox">Não tenho e-mail</span>
+</label>
+
+    <label for="telefone">Telefone</label>
+    <input type="tel" id="telefone" placeholder="(99) 99999-9999" required oninput="mascararTelefone(this)" maxlength="15">
+    <div class="invalid-feedback" style="display: none;"><img src="img/error_cupom.svg" alt="Erro">Informe os dados</div>
+
+    <label for="nome">Nome completo</label>
+    <input type="text" id="nome" placeholder="Nome e sobrenome" required>
+    <div class="invalid-feedback" style="display: none;"><img src="img/error_cupom.svg" alt="Erro">Informe os dados</div>
+
+    <label for="cpf">CPF</label>
+    <input type="text" id="cpf" placeholder="123.456.789-00" required oninput="formatarCPF(this)" maxlength="14">
+    <div class="invalid-feedback" style="display: none;" id="cpf-feedback">
+      <img src="img/error_cupom.svg" alt="Erro">CPF inválido. Ex: 200.999.745-00
+    </div>
+
+<div class="garantia">
+  <strong>Usamos seus dados de forma 100% segura para garantir a sua satisfação:</strong>
+  <ul class="garantia-lista">
+    <li><img src="img/checkmarksecurity.svg" alt="✔"> Enviar o seu comprovante de compra e pagamento;</li>
+    <li><img src="img/checkmarksecurity.svg" alt="✔"> Ativar a sua garantia de devolução caso não fique satisfeito;</li>
+    <li><img src="img/checkmarksecurity.svg" alt="✔"> Acompanhar o andamento do seu pedido;</li>
+  </ul>
+</div>
+
+    <button type="submit">IR PARA A ENTREGA</button>
+  </form>
+</div>
+
+<div class="pagamento-wrapper-etapa" style="display: none; padding: 16px; max-width: 500px; margin: 16px auto;">
+  <div class="container">
+
+    <h2>Pagamento</h2>
+
+    <div class="pix-box" style="border: 1px solid #ddd; padding: 16px; border-radius: 8px; text-align: center;">
+      <img src="img/card-pix.png" alt="Pix" style="max-width: 100px; margin-bottom: 12px;">
+      <p>Ao selecionar o Pix, você será encaminhado para um ambiente seguro para finalizar seu pagamento.</p>
+    </div>
+
+    <p class="ofertas-disponiveis">3 ofertas disponíveis</p>
+
+    <div class="oferta">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="img/coca350.jpg" alt="Coca Cola 350ml" style="width: 50px; height: 50px;">
+        <div style="flex-grow: 1;">
+          <strong>Coca Cola 350ml</strong><br><small>Bem gelada</small><br>
+          <del style="color: gray; font-size: 12px;">R$7,90</del> <span style="color: green; font-weight: bold;">R$4,90</span>
+        </div>
+        <button class="btn-oferta">PEGAR OFERTA</button>
+      </div>
+    </div>
+
+    <div class="oferta">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="img/coca2l.jpg" alt="Coca Cola 2L" style="width: 50px; height: 50px;">
+        <div style="flex-grow: 1;">
+          <strong>Coca Cola 2L</strong><br><small>Bem gelada</small><br>
+          <del style="color: gray; font-size: 12px;">R$12,90</del> <span style="color: green; font-weight: bold;">R$7,90</span>
+        </div>
+        <button class="btn-oferta">PEGAR OFERTA</button>
+      </div>
+    </div>
+
+    <div class="oferta">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="img/brigadeiro.jpg" alt="Brigadeiro" style="width: 50px; height: 50px;">
+        <div style="flex-grow: 1;">
+          <strong>Brigadeiro de Cacau</strong><br><small>No pote</small><br>
+          <del style="color: gray; font-size: 12px;">R$10,90</del> <span style="color: green; font-weight: bold;">R$5,90</span>
+        </div>
+        <button class="btn-oferta">PEGAR OFERTA</button>
+      </div>
+    </div>
+
+    <p style="font-size: 12px; color: gray;">Ofertas exclusivas para esta compra!</p>
+
+    <button class="btn-verde" id="botao-finalizar">FINALIZAR COMPRA</button>
+    <button class="btn-voltar" onclick="voltarParaEntrega()">VOLTAR</button>
+
+  </div>
+</div>
+
+  <div class="comentarios-wrapper">
+  <div class="comentarios">
+    <div class="comentario">
+      <img src="img/alvaro.png" alt="Álvaro">
+      <div class="comentario-texto">
+        <strong>Álvaro Nunes</strong>
+        A carne dessa marmita é espetacular... Peço toda semana. Recomendo!
+        <div class="estrelas">
+  <div class="estrelas-cheias" style="width: 100%;">★★★★★</div>
+  <div class="estrelas-vazias">★★★★★</div>
+</div>
+      </div>
+    </div>
+    <div class="comentario">
+      <img src="img/roberta.jpg" alt="Roberta">
+      <div class="comentario-texto">
+        <strong>Roberta Selina</strong>
+        Eu e meu marido pedimos pela primeira vez e amamos, ganharam mais 2 clientes!
+        <div class="estrelas">
+  <div class="estrelas-cheias" style="width: 100%;">★★★★★</div> 
+  <div class="estrelas-vazias">★★★★★</div>
+</div>
+      </div>
+    </div>
+    <div class="comentario">
+      <img src="img/murilo.jpg" alt="Murilo">
+      <div class="comentario-texto">
+        <strong>Murilo Arena</strong>
+        Carne realmente de primeira. Recomendo
+        <div class="estrelas">
+  <div class="estrelas-cheias" style="width: 100%;">★★★★★</div> 
+  <div class="estrelas-vazias">★★★★★</div>
+</div>
+      </div>
+    </div>
+    <div class="comentario">
+      <img src="img/rogerio.png" alt="Rogério">
+      <div class="comentario-texto">
+        <strong>Rogério Betin</strong>
+        Que bom que apareceu essa promoção pra mim, tava muito cansado pra ir cozinhar. Salvaram!
+        <div class="estrelas">
+  <div class="estrelas-cheias" style="width: 90%;">★★★★★</div> 
+  <div class="estrelas-vazias">★★★★★</div>
+</div>
+      </div>
+    </div>
+  </div>
+
+<div class="pagamento-wrapper">
+  <div class="pagamento">
+    <div class="titulo">Formas de pagamento</div>
+    <img src="img/card-pix.svg" alt="Pix">
+    <div class="copyright">© 2025 No ponto do Gosto</div>
+<div class="seguro" onclick="abrirModalSeguro()">
+  <img src="img/safe.svg" alt="Ambiente Seguro">
+  <span>Ambiente seguro</span>
+</div>
+
+
+
+<script>
+
+  function formatarCPF(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    input.value = value;
+  }
+
+  function validarCPF(cpf) {
+    if (!cpf || cpf.length !== 11 || /^([0-9])\1+$/.test(cpf)) return false;
+    let soma = 0, resto;
+    for (let i = 1; i <= 9; i++) soma += parseInt(cpf.charAt(i-1)) * (11 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.charAt(9))) return false;
+    soma = 0;
+    for (let i = 1; i <= 10; i++) soma += parseInt(cpf.charAt(i-1)) * (12 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    return resto === parseInt(cpf.charAt(10));
+  }
+
+  function mascararTelefone(input) {
+    let valor = input.value.replace(/\D/g, '').slice(0, 11);
+    if (valor.length <= 10) {
+      valor = valor.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+      valor = valor.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+    input.value = valor.trim();
+  }
+
+  let quantidade = 1;
+  const precoBase = 36.90;
+
+function alterarQuantidade(delta) {
+  quantidade += delta;
+  if (quantidade < 1) quantidade = 1;
+
+  // Atualiza a quantidade exibida
+  document.querySelectorAll('#quantidade').forEach(el => el.textContent = quantidade);
+
+  // Soma o valor das marmitas
+  const valorProduto = precoBase * quantidade;
+
+  // Soma o valor de todas as ofertas
+  let totalOfertas = 0;
+  ofertasSelecionadas.forEach(nome => {
+    const oferta = listaOfertas.find(o => o.nome === nome);
+    if (oferta) totalOfertas += oferta.preco;
+  });
+
+  // Total geral
+  const totalFinal = valorProduto + totalOfertas;
+
+  // Atualiza no carrinho
+  document.getElementById('subtotal').textContent = formatarMoeda(totalFinal);
+  document.getElementById('preco').textContent = formatarMoeda(totalFinal);
+}
+
+
+  function sugerirEmails() {
+    const input = document.getElementById("email");
+    const sugestoes = document.getElementById("sugestoes");
+    const valor = input.value;
+
+    const dominios = ["gmail.com", "hotmail.com", "outlook.com", "live.com", "yahoo.com"];
+    sugestoes.innerHTML = "";
+    if (!valor || valor.includes("@")) {
+      sugestoes.style.display = "none";
+      return;
+    }
+
+    dominios.forEach(d => {
+      const item = document.createElement("li");
+      item.textContent = valor + "@" + d;
+      item.onclick = () => {
+        input.value = item.textContent;
+        sugestoes.style.display = "none";
+      };
+      sugestoes.appendChild(item);
+    });
+
+    sugestoes.style.display = "block";
+  }
+
+  function toggleSemEmail(checkbox) {
+    const emailInput = document.getElementById("email");
+    if (checkbox.checked) {
+      emailInput.value = "Não tenho email";
+      emailInput.disabled = true;
+      emailInput.removeAttribute("required");
+      document.getElementById("sugestoes").style.display = "none";
+    } else {
+      emailInput.value = "";
+      emailInput.disabled = false;
+      emailInput.setAttribute("required", "required");
+    }
+  }
+
+  function validarFormulario(event) {
+    event.preventDefault();
+    let valido = true;
+
+    const campos = [
+      { id: 'email', ignorarSeSemEmail: true },
+      { id: 'telefone' },
+      { id: 'nome' },
+      { id: 'cpf' }
+    ];
+
+    campos.forEach(({ id, ignorarSeSemEmail }) => {
+      const input = document.getElementById(id);
+      const feedback = input.nextElementSibling;
+
+      if (ignorarSeSemEmail && document.getElementById('semEmail').checked) return;
+
+      if (!input.value.trim()) {
+        feedback.style.display = 'flex';
+        valido = false;
+      } else {
+        feedback.style.display = 'none';
+      }
+    });
+
+    const cpfInput = document.getElementById("cpf");
+    const cpfNumeros = cpfInput.value.replace(/\D/g, '');
+    const cpfFeedback = cpfInput.nextElementSibling;
+
+    if (!validarCPF(cpfNumeros)) {
+      cpfFeedback.style.display = 'flex';
+      valido = false;
+    }
+
+    if (valido) irParaEntrega();
+  }
+  
+</script>
+<script>
+
+  function voltarParaDados() {
+    document.querySelector(".form-entrega").style.display = "none";
+    document.querySelector(".form").style.display = "block";
+  }
+</script>
+<script>
+function voltarParaDados() {
+  // Esconde etapa de entrega
+  document.querySelector(".entrega-wrapper").style.display = "none";
+
+  // Mostra a etapa de identificação
+  document.querySelector(".container-wrapper .container").style.display = "block";
+
+  // Atualiza visual das etapas
+  const etapas = document.querySelectorAll(".etapas .etapa");
+  etapas[1].classList.remove("ativa");
+  etapas[0].classList.add("ativa");
+}
+</script>
+<script>
+// Máscara e validação de CEP ao digitar
+const campoCep = document.getElementById("cep");
+campoCep.addEventListener("input", function () {
+  let valor = this.value.replace(/[^0-9]/g, "");
+  if (valor.length > 8) valor = valor.slice(0, 8);
+  if (valor.length > 5) {
+    valor = valor.slice(0, 5) + "-" + valor.slice(5);
+  }
+  this.value = valor;
+});
+
+campoCep.addEventListener("blur", function () {
+  let cep = this.value.replace(/\D/g, "");
+  const feedback = this.nextElementSibling;
+
+  if (cep.length === 8) {
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => response.json())
+      .then(data => {
+        if (!data.erro) {
+          if (feedback && feedback.classList.contains("invalid-feedback")) {
+            feedback.style.display = "none";
+            feedback.innerHTML = '<img src="img/error_cupom.svg" alt="Erro">CEP inválido. Verifique e tente novamente.';
+          }
+
+          const endereco = document.getElementById("endereco");
+          const bairro = document.getElementById("bairro");
+          const cidade = document.getElementById("cidade");
+          const estado = document.getElementById("estado");
+          const pais = document.getElementById("pais");
+
+          if (endereco && !endereco.value) endereco.value = data.logradouro || "";
+          if (bairro && !bairro.value) bairro.value = data.bairro || "";
+          if (cidade && !cidade.value) cidade.value = data.localidade || "";
+          if (estado && estado.tagName.toLowerCase() === 'select') {
+            for (let i = 0; i < estado.options.length; i++) {
+              if (estado.options[i].value === data.uf) {
+                estado.selectedIndex = i;
+                break;
+              }
+            }
+          } else if (estado && !estado.value) {
+            estado.value = data.uf || "";
+          }
+          if (pais && !pais.value) pais.value = "Brasil";
+
+          const freteInfo = document.querySelector(".frete-info");
+          if (freteInfo) freteInfo.style.display = "none";
+
+          const freteTexto = document.getElementById("frete-texto");
+          if (freteTexto) {
+  freteTexto.textContent = "Grátis";
+}
+
+          const novoFrete = document.createElement("div");
+          novoFrete.innerHTML = `
+            <div class="opcao-frete">
+              <input type="radio" name="frete" checked>
+              <div class="opcao-frete-info">
+                <strong>Entrega Padrão</strong>
+                <small>25–45min</small>
+              </div>
+              <div class="opcao-frete-preco">Grátis</div>
+            </div>
+            <p class="frete-descricao" style="font-size: 12px; color: #666;">A previsão de entrega pode variar de acordo com a região e facilidade de acesso ao seu endereço</p>
+          `;
+          const form = document.querySelector(".form-entrega");
+          if (form && !document.querySelector(".opcao-frete")) {
+            form.insertBefore(novoFrete, form.querySelector(".btn-verde"));
+          }
+        } else {
+          if (feedback && feedback.classList.contains("invalid-feedback")) {
+            feedback.innerHTML = '<img src="img/error_cupom.svg" alt="Erro">CEP inválido. Verifique e tente novamente.';
+            feedback.style.display = "flex";
+          }
+        }
+      })
+      .catch(() => {
+        if (feedback && feedback.classList.contains("invalid-feedback")) {
+          feedback.innerHTML = '<img src="img/error_cupom.svg" alt="Erro">CEP inválido. Verifique e tente novamente.';
+          feedback.style.display = "flex";
+        }
+      });
+  } else {
+    if (feedback && feedback.classList.contains("invalid-feedback")) {
+      feedback.innerHTML = '<img src="img/error_cupom.svg" alt="Erro">CEP inválido. Verifique e tente novamente.';
+      feedback.style.display = "flex";
+    }
+  }
+});
+
+// Revalida campos ao clicar em "Ir para pagamento"
+function validarEntregaAntesPagamento(event) {
+  event.preventDefault();
+  let valido = true;
+  const camposObrigatorios = ["cep", "endereco", "numero", "bairro", "cidade", "estado"];
+  const checkboxSN = document.getElementById("semNumero");
+
+  camposObrigatorios.forEach(id => {
+    const campo = document.getElementById(id);
+    if (id === "numero" && checkboxSN && checkboxSN.checked) return;
+    const feedback = campo.nextElementSibling;
+
+    if (!campo.value.trim()) {
+      if (feedback && feedback.classList.contains("invalid-feedback")) {
+        feedback.style.display = "flex";
+      }
+      campo.classList.add("input-error");
+      valido = false;
+    } else {
+      if (feedback && feedback.classList.contains("invalid-feedback")) {
+        feedback.style.display = "none";
+      }
+      campo.classList.remove("input-error");
+    }
+  });
+
+  if (valido) {
+    irParaPagamento(event);
+  }
+}
+
+// Certifique-se de associar a função ao botão:
+const btnPagamento = document.querySelector(".btn-verde");
+if (btnPagamento) {
+  btnPagamento.addEventListener("click", validarEntregaAntesPagamento);
+}
+</script>
+<script>
+  const checkboxSN = document.getElementById("semNumero");
+  const campoNumero = document.getElementById("numero");
+  const numeroFeedback = campoNumero.nextElementSibling;
+
+  if (checkboxSN) {
+    checkboxSN.addEventListener("change", function () {
+      if (this.checked) {
+        campoNumero.value = "S/N";
+        campoNumero.disabled = true;
+        campoNumero.removeAttribute("required");
+        campoNumero.classList.remove("input-error");
+        if (numeroFeedback && numeroFeedback.classList.contains("invalid-feedback")) {
+          numeroFeedback.style.display = "none";
+        }
+      } else {
+        campoNumero.value = "";
+        campoNumero.disabled = false;
+        campoNumero.setAttribute("required", "required");
+      }
+    });
+  }
+</script>
+<script>
+function irParaPagamento(event) {
+  event.preventDefault();
+
+  const etapas = document.querySelectorAll(".etapas .etapa");
+  etapas[1].classList.remove("ativa");
+  etapas[2].classList.add("ativa");
+
+  document.querySelector(".entrega-wrapper").style.display = "none";
+  document.querySelector(".pagamento-wrapper-etapa").style.display = "block";
+}
+function voltarParaEntrega() {
+  document.querySelector(".pagamento-wrapper-etapa").style.display = "none";
+  document.querySelector(".entrega-wrapper").style.display = "block";
+
+  const etapas = document.querySelectorAll(".etapas .etapa");
+  etapas[2].classList.remove("ativa");
+  etapas[1].classList.add("ativa");
+}
+</script>
+<script>
+document.querySelectorAll('.btn-oferta').forEach(botao => {
+  botao.addEventListener('click', function () {
+    const oferta = this.closest('.oferta');
+    oferta.classList.add('oferta-adicionada');
+
+    const ribbon = document.createElement('span');
+    ribbon.className = 'ribbon';
+    ribbon.innerText = 'OFERTA ADQUIRIDA';
+    oferta.prepend(ribbon);
+
+    const remover = document.createElement('button');
+    remover.className = 'remove-oferta';
+    remover.innerText = '🗑';
+    remover.onclick = () => {
+      oferta.classList.remove('oferta-adicionada');
+      ribbon.remove();
+      remover.remove();
+    };
+    oferta.appendChild(remover);
+      // ✅ adiciona ao carrinho
+  const nome = oferta.querySelector('strong').innerText;
+  adicionarOfertaAoCarrinho(nome);
+  });
+});
+</script>
+<script>
+const listaOfertas = [
+  {
+    nome: 'Coca Cola 350ml',
+    preco: 4.90,
+    img: 'img/coca350.jpg',
+    desconto: 'R$3,00 OFF',
+    descricao: 'Bem gelada'
+  },
+  {
+    nome: 'Coca Cola 2L',
+    preco: 7.90,
+    img: 'img/coca2l.jpg',
+    desconto: 'R$5,00 OFF',
+    descricao: 'Bem gelada'
+  },
+  {
+    nome: 'Brigadeiro de Cacau',
+    preco: 5.90,
+    img: 'img/brigadeiro.jpg',
+    desconto: 'R$5,00 OFF',
+    descricao: 'No pote'
+  }
+];
+
+const ofertasSelecionadas = new Set();
+
+function formatar(valor) {
+  return 'R$ ' + valor.toFixed(2).replace('.', ',');
+}
+function formatarMoeda(valor) {
+  return 'R$ ' + valor.toFixed(2).replace('.', ',');
+}
+
+function atualizarTotal() {
+  const subtotalEl = document.getElementById('subtotal');
+  const totalEl = document.getElementById('preco');
+
+  // Total do produto principal
+  const valorProduto = precoBase * quantidade;
+
+  // Soma de todas as ofertas ainda selecionadas
+  let totalOfertas = 0;
+  ofertasSelecionadas.forEach(nome => {
+    const oferta = listaOfertas.find(o => o.nome === nome);
+    if (oferta) totalOfertas += oferta.preco;
+  });
+
+  const totalFinal = valorProduto + totalOfertas;
+
+  subtotalEl.textContent = formatarMoeda(totalFinal);
+  totalEl.textContent = formatarMoeda(totalFinal);
+}
+
+
+function adicionarOfertaAoCarrinho(nome) {
+  if (ofertasSelecionadas.has(nome)) return;
+
+  const oferta = listaOfertas.find(o => o.nome === nome);
+  if (!oferta) return;
+
+  ofertasSelecionadas.add(nome);
+
+  const ofertasContainer = document.getElementById("ofertas-adquiridas");
+
+  // Atualiza título
+  let titulo = document.getElementById("titulo-ofertas");
+  if (!titulo) {
+    titulo = document.createElement("p");
+    titulo.id = "titulo-ofertas";
+    ofertasContainer.prepend(titulo);
+  }
+  titulo.innerText = ofertasSelecionadas.size + (ofertasSelecionadas.size === 1 ? " oferta adquirida" : " ofertas adquiridas");
+
+  // Cria bloco da oferta
+  const div = document.createElement("div");
+  div.className = "oferta-carrinho";
+  div.innerHTML = `
+    <img src="${oferta.img}" alt="${oferta.nome}">
+    <div class="info">
+      <strong>${oferta.nome}</strong><br>
+      <small>${oferta.descricao}</small><br>
+      <span>1x de ${formatar(oferta.preco)}</span>
+      <span class="badge">${oferta.desconto}</span>
+    </div>
+  `;
+
+  // Botão de remover
+  const remover = document.createElement("button");
+  remover.className = "remove-oferta";
+  remover.textContent = '🗑';
+
+remover.onclick = () => {
+    div.remove();
+    ofertasSelecionadas.delete(nome);
+    atualizarTotal();
+
+    // Atualiza o título novamente
+    const qtd = ofertasSelecionadas.size;
+    if (qtd === 0) {
+      titulo.remove();
+    } else {
+      titulo.innerText = qtd + (qtd === 1 ? " oferta adquirida" : " ofertas adquiridas");
+    }
+
+    // ✅ Volta a deixar a oferta visível e clicável
+    document.querySelectorAll('.oferta').forEach(ofertaEl => {
+      const nomeEl = ofertaEl.querySelector('strong');
+      if (nomeEl && nomeEl.innerText === nome) {
+        ofertaEl.classList.remove('oferta-adicionada');
+        const ribbon = ofertaEl.querySelector('.ribbon');
+        const removerBtn = ofertaEl.querySelector('.remove-oferta');
+        if (ribbon) ribbon.remove();
+        if (removerBtn) removerBtn.remove();
+      }
+    });
+  };
+
+
+  div.appendChild(remover);
+  ofertasContainer.appendChild(div);
+
+  atualizarTotal();
+}
+</script>
+<script>
+function coletarDadosCliente() {
+  // Etapa 1: Identificação
+  const nome = document.getElementById("nome")?.value.trim();
+  const telefone = document.getElementById("telefone")?.value.trim();
+  let email = document.getElementById("email")?.value.trim();
+  const cpf = document.getElementById("cpf")?.value.trim();
+  const semEmail = document.getElementById("semEmail")?.checked;
+
+  // Gera email se marcado "Não tenho e-mail"
+  if (semEmail || !email || email === "Não tenho email") {
+    const nomeSlug = nome?.split(" ")[0]?.toLowerCase() || "cliente";
+    const timestamp = Date.now();
+    email = `${nomeSlug}${timestamp}@naopossui.email`;
+  }
+
+  // Etapa 2: Entrega
+  const cep = document.getElementById("cep")?.value.trim();
+  const endereco = document.getElementById("endereco")?.value.trim();
+  const numero = document.getElementById("numero")?.value.trim();
+  const complemento = document.getElementById("complemento")?.value.trim();
+  const bairro = document.getElementById("bairro")?.value.trim();
+  const cidade = document.getElementById("cidade")?.value.trim();
+  const estado = document.getElementById("estado")?.value.trim();
+  const pais = document.getElementById("pais")?.value;
+
+  const dadosCliente = {
+    nome,
+    telefone,
+    email,
+    cpf,
+    enderecoCompleto: {
+      cep,
+      endereco,
+      numero,
+      complemento,
+      bairro,
+      cidade,
+      estado,
+      pais
+    }
+  };
+
+  console.log("📦 Dados do cliente:", dadosCliente);
+  return dadosCliente;
+}
+</script>
+
+<script>
+function mostrarTelaPix(codigoPix, valor) {
+  const anterior = document.getElementById("tela-pix-overlay");
+  if (anterior) anterior.remove();
+
+  let tempoRestante = 300;
+  const formatarTempo = (s) => {
+    const m = String(Math.floor(s / 60)).padStart(2, "0");
+    const ss = String(s % 60).padStart(2, "0");
+    return `${m}:${ss}`;
+  };
+
+  const timerId = `timer-${Date.now()}`;
+  const inputId = `pix-input-${Date.now()}`;
+  const botaoId = `pix-botao-${Date.now()}`;
+  const msgErroId = `mensagem-expirou-${Date.now()}`;
+
+  const telaPix = document.createElement("div");
+  telaPix.id = "tela-pix-overlay";
+  telaPix.style = `
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #c2c2c2; z-index: 10000;
+    overflow-y: auto; display: flex;
+    justify-content: center; align-items: center;
+  `;
+
+  telaPix.innerHTML = `
+    <div style="max-width: 440px; width: 100%; padding: 24px; font-family: Arial, sans-serif; background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); text-align: center; margin: 16px;">
+      <img src="https://files.catbox.moe/zs2gcb.png" alt="Logo" style="height: 40px; margin-bottom: 12px;">
+      <h2 style="font-size: 14px; color: #333; font-weight: bold;">Falta pouco! Para finalizar a compra, efetue o pagamento com PIX!</h2>
+
+      <p style="margin-top: 10px; font-size: 12px; color: gray;">
+        O código expira em: <span id="${timerId}" style="color: red;">5:00</span>
+      </p>
+
+      <div id="${msgErroId}" style="display: none; margin-top: 8px; color: red; font-size: 13px;">Ops! Código expirado. Clique abaixo para gerar outro.</div>
+
+      <p style="margin: 16px 0 6px; font-size: 13px; color: #333;">Copie a chave abaixo e utilize a opção <strong>PIX Copia e Cola</strong>:</p>
+
+      <input type="text" id="${inputId}" value="${codigoPix}" readonly
+        style="width: 100%; padding: 12px; font-size: 13px; border: 1px solid #ccc; border-radius: 6px;">
+
+      <button id="${botaoId}" onclick="copiarPix('${codigoPix}')"
+        style="margin-top: 12px; width: 100%; padding: 10px; background: #00B272; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">
+        COPIAR CÓDIGO
+      </button>
+
+      <button id="botaoJaPaguei" disabled style="margin-top: 12px; width: 100%; padding: 10px; background: gray; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: not-allowed;">
+  ✅ Já fiz o pagamento
+</button>
+
+
+      <p style="margin-top: 20px; font-size: 12px;">
+        <strong>Valor a ser pago:</strong> <span style="color: #28a745;">R$ ${valor.toFixed(2).replace('.', ',')}</span>
+      </p>
+
+      <div style="margin-top:25px; display:flex; gap:10px; align-items:flex-start; text-align:left;">
+        <div><img src="img/icon-pix.png" style="width: 50px;"></div>
+        <span style="font-size: 12px;">Após copiar o código, abra seu aplicativo de pagamento onde você utiliza o Pix.</span>
+      </div>
+
+      <div style="margin-top:15px; display:flex; gap:10px; align-items:flex-start; text-align:left;">
+        <div><img src="img/qr-code.png" style="width: 40px;"></div>
+        <span style="font-size: 12px;"><strong>Escolha a opção PIX Copia e Cola</strong> e insira o código copiado.</span>
+      </div>
+
+      <div style="margin-top:12px; display:flex; gap:10px; align-items:flex-start; text-align:left;">
+        <div><img src="img/icon-check.png" style="width: 32px;"></div>
+        <span style="font-size: 12px;">Confirme as informações e finalize sua compra.</span>
+      </div>
+
+      <hr style="margin: 20px 0;">
+      <div style="display:flex; align-items:center; justify-content: center; gap:10px;">
+        <img src="img/soon-pix.svg" alt="Pix" style="height:20px;">
+        <img src="img/safe-environment.svg" alt="Ambiente Seguro" style="height:20px;">
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(telaPix);
+
+  const timer = setInterval(() => {
+    tempoRestante--;
+    const el = document.getElementById(timerId);
+    if (!el) return clearInterval(timer);
+    el.textContent = formatarTempo(tempoRestante);
+
+    if (tempoRestante <= 0) {
+      clearInterval(timer);
+      el.textContent = "00:00";
+      el.style.color = "gray";
+      document.getElementById(inputId).style.display = "none";
+      document.getElementById(msgErroId).style.display = "block";
+
+      const botao = document.getElementById(botaoId);
+      botao.textContent = "GERAR NOVO PIX";
+      botao.style.background = "#007BFF";
+      botao.onclick = () => {
+        botao.disabled = true;
+        telaPix.remove();
+        enviarParaProsperidadePay();
+      };
+    }
+  }, 1000);
+}
+async function enviarParaProsperidadePay() {
+  const dados = coletarDadosCliente();
+
+  const cpfLimpo = dados.cpf.replace(/\D/g, '');
+  const telefoneLimpo = dados.telefone.replace(/\D/g, '');
+
+  const totalTexto = document.getElementById("preco")?.textContent || "R$ 0,00";
+  const totalLimpo = parseFloat(totalTexto.replace("R$", "").replace(",", ".").trim());
+  const amount = Math.round(totalLimpo * 100);
+
+  const tituloProduto = document.querySelector(".detalhes strong")?.textContent.trim() || "Produto No ponto do Gosto";
+
+  const body = {
+    name: dados.nome,
+    email: dados.email,
+    cpf: cpfLimpo,
+    phone: telefoneLimpo,
+    paymentMethod: "PIX",
+    amount: amount,
+    traceable: true,
+    items: [
+      {
+        unitPrice: amount,
+        title: tituloProduto,
+        quantity: 1,
+        tangible: true
+      }
+    ],
+    address: dados.enderecoCompleto.endereco,
+    number: dados.enderecoCompleto.numero,
+    complement: dados.enderecoCompleto.complemento,
+    city: dados.enderecoCompleto.cidade,
+    district: dados.enderecoCompleto.bairro,
+    state: dados.enderecoCompleto.estado,
+    zipCode: dados.enderecoCompleto.cep.replace(/\D/g, '')
+  };
+
+  try {
+    // Mostra tela de carregamento antes da requisição
+    document.getElementById("processando-pagamento").style.display = "flex";
+
+    const resposta = await fetch("https://pay.prosperidadepay.com.br/api/v1/transaction.purchase", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "cedd3e00-4dab-4576-aff4-fda2a38e470c"
+      },
+      body: JSON.stringify(body)
+    });
+
+    const resultado = await resposta.json();
+    console.log("✅ Pagamento gerado com sucesso:", resultado);
+// Captura o primeiro nome
+const primeiroNome = dados.nome.split(" ")[0];
+
+// Remove máscara do telefone
+const telefoneLimpo = dados.telefone.replace(/\D/g, "");
+const valor = resultado.amount / 100;
+
+// Envia mensagem pelo WhatsApp via Z-API
+fetch("https://api.z-api.io/instances/3E3D91F948A2E0FD667D1681C9B3649F/token/EB1D279C40DA749B9E7E4BF5/send-text", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "client-token": "Fe33cc5abf7a9494d8dce388fb0bab256S"
+  },
+  body: JSON.stringify({
+    phone: telefoneLimpo.startsWith("55") ? telefoneLimpo : `55${telefoneLimpo}`,
+    message: `🔔 Olá *${primeiroNome}*! Falta pouco para confirmar o seu pedido nº *925*, no valor de *R$ ${valor.toFixed(2).replace('.', ',')}* 😄\n\nAgora é só realizar o pagamento através do *Pix Copia e Cola* abaixo 😉\n\nMas não esqueça, você tem *5 MINUTOS* para efetuar o pagamento 🕒⬇️`
+  })
+})
+.then(r => r.json())
+.then(data => {
+  console.log("📤 Mensagem 1 enviada:", data);
+
+  // Envia a segunda mensagem com o PIX Copia e Cola
+  return fetch("https://api.z-api.io/instances/3E3D91F948A2E0FD667D1681C9B3649F/token/EB1D279C40DA749B9E7E4BF5/send-text", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "client-token": "Fe33cc5abf7a9494d8dce388fb0bab256S"
+    },
+    body: JSON.stringify({
+      phone: telefoneLimpo.startsWith("55") ? telefoneLimpo : `55${telefoneLimpo}`,
+      message: resultado.pixCode
+    })
+  });
+})
+.then(r => r.json())
+.then(data => console.log("📤 Mensagem 2 enviada:", data))
+.catch(e => console.error("❌ Erro ao enviar no WhatsApp:", e));
+
+    // Aguarda 5 segundos e mostra a tela de PIX
+    setTimeout(() => {
+      document.getElementById("processando-pagamento").style.display = "none";
+      mostrarTelaPix(resultado.pixCode, resultado.amount / 100);
+    }, 5000);
+
+    if (resultado.pixQrCode) {
+      document.getElementById("qr")?.setAttribute("src", resultado.pixQrCode);
+    }
+
+  } catch (erro) {
+    console.error("❌ Erro ao gerar pagamento:", erro);
+    alert("Erro ao gerar o pagamento. Verifique os dados e tente novamente.");
+    document.getElementById("processando-pagamento").style.display = "none";
+  }
+}
+</script>
+
+<script>
+let travado = false;
+
+window.addEventListener("DOMContentLoaded", function () {
+  const btn = document.getElementById("botao-finalizar");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      if (travado) return;
+      travado = true;
+
+      // Ativa tela de carregamento
+      document.getElementById("processando-pagamento").style.display = "flex";
+
+      // Chama API após pequeno atraso
+      setTimeout(() => {
+        enviarParaProsperidadePay();
+      }, 300);
+
+      // Libera clique após 15 segundos
+      setTimeout(() => {
+        travado = false;
+      }, 15000);
+    });
+  }
+});
+</script>
+
+<!-- Tela de carregamento -->
+<div id="processando-pagamento" style="
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+  font-family: Arial, sans-serif;
+">
+  <img src="img/loading-gif-cloudfox.gif" alt="Carregando..." style="max-width: 100px; height: auto; margin-bottom: 20px;">
+  <strong style="font-size: 20px; color: #333;">Processando pagamento!</strong>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+function copiarPix(codigo) {
+    navigator.clipboard.writeText(codigo).then(() => {
+
+    // 🎯 Evento Facebook - sinal de intenção forte de compra
+    fbq('track', 'Purchase', {
+      value: 23.90, // ou use a variável `valor` se quiser o valor dinâmico do carrinho
+      currency: 'BRL'
+    });
+    setTimeout(() => {
+      Swal.fire({
+        icon: 'success',                // ícone animado padrão com check animado
+        title: 'Código copiado com sucesso!',
+        showConfirmButton: false,
+        timer: 1600,
+        background: '#fff',             // quadro branco compacto
+        color: '#333',
+        backdrop: 'rgba(0,0,0,0.6)',   // fundo preto translúcido atrás
+        width: '240px',                 // largura menor para ficar compacto
+        padding: '1.5em',
+        iconColor: '#00b272',           // verde do ícone
+        didOpen: (popup) => {
+          const container = popup.closest('.swal2-container');
+          if (container) {
+            container.style.zIndex = '11000'; // garantir que fique acima do overlay
+          }
+        },
+        customClass: {
+          title: 'swal2-title-smaller'
+        }
+      });
+    }, 100);
+  
+    // Habilita botão "Já fiz o pagamento" após copiar
+    const botaoConfirmar = document.getElementById("botaoJaPaguei");
+    if (botaoConfirmar) {
+      botaoConfirmar.disabled = false;
+      botaoConfirmar.style.background = "#007bff";
+      botaoConfirmar.style.cursor = "pointer";
+      botaoConfirmar.onclick = () => confirmarPagamento();
+    }
+
+  }).catch(() => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Erro ao copiar',
+      text: 'Tente novamente.',
+      showConfirmButton: false,
+      timer: 1600,
+      background: '#fff',
+      color: '#333',
+      backdrop: 'rgba(0,0,0,0.6)',
+      width: '240px',
+      padding: '1.5em',
+      didOpen: (popup) => {
+        const container = popup.closest('.swal2-container');
+        if (container) {
+          container.style.zIndex = '11000';
+        }
+      }
+    });
+  });
+}
+
+// Adiciona CSS para o título menor, pode colocar no head do seu HTML
+const style = document.createElement('style');
+style.innerHTML = `
+  .swal2-title-smaller {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+`;
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>
+
+
