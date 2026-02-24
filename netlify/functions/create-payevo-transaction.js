@@ -94,11 +94,12 @@ exports.handler = async (event) => {
       // Modo DEMO: Retornar QR code simulado para testes
       const demoQrCode = {
         id: `order-${Date.now()}`,
-        qrCode: '00020126580014br.gov.bcb.pix0136xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx5204000053039865406339.905802BR5913Delivery App6009SAO PAULO62070503***63041D6D',
+        qrcode: '00020126580014br.gov.bcb.pix0136xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx5204000053039865406339.905802BR5913Delivery App6009SAO PAULO62070503***63041D6D',
         pixKey: 'demo@delivery.com.br',
         amount: payload.amount,
         customer: payload.customer,
         createdAt: new Date().toISOString(),
+        expirationDate: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
       };
 
       console.log('🎭 MODO DEMO ativado - Usando QR code simulado');

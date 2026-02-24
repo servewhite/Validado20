@@ -865,6 +865,7 @@ document.head.appendChild(a);
 							}
 						});
 					});
+					const telefoneinput = document.getElementById('swal-telefone');
 					if (telefoneinput) {
 						telefoneinput.addEventListener('input', function(e) {
 							let value = e.target.value.replace(/[^0-9]/g, '');
