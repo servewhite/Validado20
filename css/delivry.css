@@ -1879,13 +1879,32 @@ input::placeholder {
         font-size: 20px;
     }
 
+    #pedido .entrega {
+        margin-top: 15px;
+    }
+
     #pedido .entrega .radio {
-        height: 80px;
+        height: 50px;
+    }
+
+    #pedido .entrega .radio label span {
+        font-size: 14px;
+        padding: 5px;
     }
 
     #pedido .entrega .radio label,
     #pedido .entrega .radio label input[type=radio]:checked {
         border-radius: 10px;
+    }
+
+    #pedido .pagamentos {
+        gap: 5px;
+        margin-bottom: 5px;
+    }
+
+    #pedido .pagamentos input+label {
+        padding-left: 50px;
+        font-size: 14px;
     }
 
     .form .input75,
