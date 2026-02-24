@@ -1,0 +1,12 @@
+# Configuração do Netlify
+
+[build]
+  command = "echo 'Build completo'"
+  publish = "."
+  functions = "netlify/functions"
+
+# Redirecionar requisições para SPA (se necessário)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
