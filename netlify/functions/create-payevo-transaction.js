@@ -2,6 +2,18 @@
  * Netlify Function: Gerar PIX via PayEvo
  * Endpoint: /.netlify/functions/create-payevo-transaction
  * Método: POST
+ * 
+ * CREDENCIAIS ESPERADAS NO NETLIFY:
+ * - PAYEVO_PUBLIC_KEY (Chave pública da PayEvo)
+ * - PAYEVO_SECRET_KEY (Chave privada/secreta da PayEvo)
+ * 
+ * AUTENTICAÇÃO:
+ * - Headers: X-Public-Key e X-Secret-Key
+ * 
+ * Configuração no Netlify:
+ * 1. Site settings → Environment variables
+ * 2. Adicione suas credenciais PayEvo
+ * 3. Deploy novamente
  */
 
 const https = require('https');
@@ -83,13 +95,28 @@ exports.handler = async (event) => {
     console.log('   CPF:', payload.customer.cpf);
 
     // Verificar se as credenciais PayEvo estão configuradas
-    const payevoApiKey = process.env.PAYEVO_API_KEY;
-    const payevoMerchantId = process.env.PAYEVO_MERCHANT_ID;
+    // Suportar múltiplos nomes de variáveis
+    const payevoApiKey = process.env.PAYEVO_PUBLIC_KEY || 
+                         process.env.PAYEVO_API_KEY || 
+                         process.env.PAYEVO_TOKEN || 
+                         process.env.API_KEY_PAYEVO;
+    
+    const payevoSecretKey = process.env.PAYEVO_SECRET_KEY;
+    
+    const payevoMerchantId = process.env.PAYEVO_MERCHANT_ID || 
+                             process.env.PAYEVO_EMPRESA_ID ||
+                             process.env.MERCHANT_ID;
 
-    if (!payevoApiKey || !payevoMerchantId) {
-      console.error('⚠️ Variáveis de ambiente não configuradas');
-      console.error('   PAYEVO_API_KEY:', payevoApiKey ? 'OK' : 'FALTANDO');
-      console.error('   PAYEVO_MERCHANT_ID:', payevoMerchantId ? 'OK' : 'FALTANDO');
+    console.log('🔍 [DEBUG] Verificando variáveis de ambiente:');
+    console.log('   PAYEVO_PUBLIC_KEY:', process.env.PAYEVO_PUBLIC_KEY ? '✅ Existe (' + process.env.PAYEVO_PUBLIC_KEY.substring(0, 10) + '...)' : '❌ Não existe');
+    console.log('   PAYEVO_SECRET_KEY:', process.env.PAYEVO_SECRET_KEY ? '✅ Existe (' + process.env.PAYEVO_SECRET_KEY.substring(0, 10) + '...)' : '❌ Não existe');
+    console.log('   PAYEVO_API_KEY:', process.env.PAYEVO_API_KEY ? '✅ Existe' : '❌ Não existe');
+    console.log('   PAYEVO_MERCHANT_ID:', process.env.PAYEVO_MERCHANT_ID ? '✅ Existe' : '❌ Não existe');
+
+    if (!payevoApiKey || !payevoSecretKey) {
+      console.error('⚠️ Variáveis de ambiente não configuradas corretamente');
+      console.error('   Chave Pública:', payevoApiKey ? 'OK (' + payevoApiKey.substring(0, 10) + '...)' : 'FALTANDO');
+      console.error('   Chave Privada:', payevoSecretKey ? 'OK (' + payevoSecretKey.substring(0, 10) + '...)' : 'FALTANDO');
 
       // Modo DEMO: Retornar QR code simulado para testes
       const demoQrCode = {
@@ -119,6 +146,14 @@ exports.handler = async (event) => {
 
     console.log('✅ Credenciais PayEvo encontradas, preparando requisição para API...');
 
+    // Configurar endpoint da API (suportar diferentes versões/provedores)
+    const payevoHost = process.env.PAYEVO_API_HOST || 'api.payevo.com.br';
+    const payevoPath = process.env.PAYEVO_API_PATH || '/pix/generate';
+    
+    console.log('🌐 [PayEvo] Configuração de API:');
+    console.log('   Host:', payevoHost);
+    console.log('   Path:', payevoPath);
+
     // Preparar dados para PayEvo
     const payevoPayload = {
       merchant: payevoMerchantId,
@@ -142,12 +177,29 @@ exports.handler = async (event) => {
     };
 
     console.log('📤 [PayEvo] Enviando requisição...');
+    console.log('   Host:', payevoHost);
+    console.log('   Path:', payevoPath);
+    console.log('   Method: POST');
+    console.log('   Merchant ID:', payevoMerchantId);
+    console.log('   Valor:', payload.amount);
+    console.log('   Cliente:', payload.customer.name);
+    console.log('   CPF:', payload.customer.cpf.replace(/\D/g, '').substring(0, 3) + '***');
 
     // Chamar API PayEvo
     const payevoOptions = {
-      hostname: 'api.payevo.com.br', // URL da API PayEvo (adapte conforme necessário)
-      path: '/pix/generate',
+      hostname: payevoHost,
+      path: payevoPath,
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Public-Key': payevoApiKey,
+        'X-Secret-Key': payevoSecretKey,
+      },
+    };
+    
+    console.log('🔐 [PayEvo] Headers de autenticação:');
+    console.log('   X-Public-Key: ' + payevoApiKey.substring(0, 15) + '...');
+    console.log('   X-Secret-Key: ' + payevoSecretKey.substring(0, 15) + '...');
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${payevoApiKey}`,
@@ -159,18 +211,32 @@ exports.handler = async (event) => {
 
     if (payevoResponse.statusCode !== 200 && payevoResponse.statusCode !== 201) {
       console.error('❌ Erro da API PayEvo:', payevoResponse.statusCode);
-      console.error('   Resposta:', payevoResponse.body);
+      console.error('   Resposta completa:', payevoResponse.body);
+      
+      // Tentar parsear para melhorar a mensagem
+      let errorDetails = '';
+      try {
+        const errorData = JSON.parse(payevoResponse.body);
+        errorDetails = JSON.stringify(errorData, null, 2);
+      } catch (e) {
+        errorDetails = payevoResponse.body;
+      }
+      
+      console.error('   Detalhes do erro:', errorDetails);
       return {
         statusCode: 502,
         body: JSON.stringify({
           error: 'Erro ao gerar PIX na API PayEvo',
-          details: payevoResponse.body,
+          httpStatus: payevoResponse.statusCode,
+          details: errorDetails,
         }),
       };
     }
 
     const payevoData = JSON.parse(payevoResponse.body);
     console.log('✅ [PayEvo] PIX gerado com sucesso');
+    console.log('   ID:', payevoData.id);
+    console.log('   Chave PIX:', payevoData.pixKey);
 
     return {
       statusCode: 200,
