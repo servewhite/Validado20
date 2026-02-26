@@ -200,12 +200,6 @@ exports.handler = async (event) => {
     console.log('🔐 [PayEvo] Headers de autenticação:');
     console.log('   X-Public-Key: ' + payevoApiKey.substring(0, 15) + '...');
     console.log('   X-Secret-Key: ' + payevoSecretKey.substring(0, 15) + '...');
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${payevoApiKey}`,
-        'X-Merchant-ID': payevoMerchantId,
-      },
-    };
 
     const payevoResponse = await makeHttpsRequest(payevoOptions, payevoPayload);
 
