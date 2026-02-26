@@ -1233,6 +1233,21 @@ img {
     font-size: 12px;
     padding: 8px 12px;
   }
+  .pagamento-wrapper {
+    padding: 12px;
+    margin: 12px auto;
+    max-width: 100%;
+  }
+  .pagamento-wrapper .pagamento img {
+    height: 20px;
+    margin: 8px auto 6px;
+  }
+  .pagamento-wrapper .titulo {
+    font-size: 12px;
+  }
+  .pagamento-wrapper .copyright {
+    font-size: 11px;
+  }
 }
 
 
