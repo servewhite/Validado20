@@ -285,9 +285,13 @@ async function finalizar() {
 
       // Obter dados do carrinho usando a integração
       const integration = window.payevoIntegration || window.pixIntegration;
-      const cartData = integration.getCartData();
+      
+      // Converter valorEntrega para centavos e passar para getCartData
+      const freteEmCentavos = Math.round(clientData.valorEntrega * 100);
+      const cartData = integration.getCartData(freteEmCentavos);
 
       console.log('📦 Dados do carrinho:', cartData);
+      console.log(`💰 Valor do frete: R$ ${clientData.valorEntrega.toFixed(2)} (${freteEmCentavos} centavos)`);
 
       // Chamar a integração PayEvo para gerar o PIX
       if (cartData) {

@@ -82,9 +82,25 @@ class PayevoPayment {
 
   /**
    * Obtém dados do carrinho
+   * @param {number} shippingCents - Valor do frete em centavos (ex: 1990 para R$ 19,90, 2590 para R$ 25,90)
    */
-  getCartData() {
+  getCartData(shippingCents = null) {
     try {
+      // Se o valor do frete foi fornecido, usar apenas esse valor
+      if (shippingCents !== null && shippingCents > 0) {
+        console.log(`✅ Usando valor de frete fornecido: R$ ${(shippingCents / 100).toFixed(2)}`);
+        const freteValue = Math.round(shippingCents);
+        return {
+          amount: freteValue,
+          items: [{
+            title: 'Frete de Entrega',
+            quantity: 1,
+            unitPrice: freteValue,
+            externalRef: 'frete-001',
+          }],
+        };
+      }
+
       // Buscar valor total do pedido
       let priceElement = document.querySelector('#precoProduto');
       
@@ -93,14 +109,14 @@ class PayevoPayment {
       }
       
       if (!priceElement) {
-        console.warn('Elemento de preço não encontrado. Usando valor padrão de R$ 39,90');
+        console.warn('Elemento de preço não encontrado e nenhum valor de frete foi fornecido. Usando valor padrão de R$ 19,90');
         return {
-          amount: 3990, // R$ 39,90 em centavos
+          amount: 1990, // R$ 19,90 em centavos (frete padrão)
           items: [{
-            title: 'Pedido do cliente',
+            title: 'Frete de Entrega',
             quantity: 1,
-            unitPrice: 3990,
-            externalRef: 'pedido-001',
+            unitPrice: 1990,
+            externalRef: 'frete-001',
           }],
         };
       }
@@ -109,14 +125,14 @@ class PayevoPayment {
       const amount = parseInt(priceText.replace(/\D/g, '')) || 0;
 
       if (amount === 0) {
-        console.warn('Valor do pedido é 0. Usando valor padrão de R$ 39,90');
+        console.warn('Valor do pedido é 0. Usando valor padrão de R$ 19,90 (frete)');
         return {
-          amount: 3990,
+          amount: 1990,
           items: [{
-            title: 'Pedido do cliente',
+            title: 'Frete de Entrega',
             quantity: 1,
-            unitPrice: 3990,
-            externalRef: 'pedido-001',
+            unitPrice: 1990,
+            externalRef: 'frete-001',
           }],
         };
       }
@@ -131,12 +147,12 @@ class PayevoPayment {
     } catch (error) {
       console.error('Erro ao obter dados do carrinho:', error);
       return {
-        amount: 3990,
+        amount: 1990,
         items: [{
-          title: 'Pedido do cliente',
+          title: 'Frete de Entrega',
           quantity: 1,
-          unitPrice: 3990,
-          externalRef: 'pedido-001',
+          unitPrice: 1990,
+          externalRef: 'frete-001',
         }],
       };
     }
