@@ -335,9 +335,15 @@ class PayevoPayment {
    * Exibe modal SweetAlert com QR Code
    */
   async displayPixModal(pixData, amount) {
-    const { qrcode, expirationDate } = pixData;
+    // Extrair dados do PIX conforme estrutura PayEvo
+    const pix = pixData.pix || pixData;
+    const qrcode = pix.qrcode || pix.qrCode || pixData.qrcode || pixData.qrCode;
+    const expirationDate = pix.expirationDate || pixData.expirationDate;
+
+    console.log('📋 [PIX] Dados extraídos:', { qrcode: !!qrcode, expirationDate });
 
     if (!qrcode) {
+      console.error('❌ QR Code não encontrado em:', JSON.stringify(pixData, null, 2));
       throw new Error('QR Code não recebido da API');
     }
 
