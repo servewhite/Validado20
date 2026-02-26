@@ -943,7 +943,14 @@ document.head.appendChild(a);
 							address: result.value.endereco
 						};
 
-						const cartData = window.pixIntegration.getCartData();
+						// Obter tipo de entrega selecionado
+						const tipoEntregaSelecionado = document.querySelector('input[name="entrega-tipo"]:checked')?.value || 'normal';
+						const valorEntrega = tipoEntregaSelecionado === 'rapida' ? 25.90 : 19.90;
+						const freteEmCentavos = Math.round(valorEntrega * 100);
+						
+						console.log(`💰 Tipo de entrega: ${tipoEntregaSelecionado} | Valor: R$ ${valorEntrega.toFixed(2)} (${freteEmCentavos} centavos)`);
+
+						const cartData = window.pixIntegration.getCartData(freteEmCentavos);
 
 						if (cartData) {
 							await window.pixIntegration.generatePixForOrder(clientData, cartData);

@@ -1138,7 +1138,16 @@ function verificarBotaoAdicionarProduto() {
 function totalProduto() {
     let somarAoPreco = $("#detalhesProduto .info1 .somarAoPreco").text();
     let totalOpcionais = $("#detalhesProduto .info2 .tipo").length;
-    let precoProduto = parseFloat($("#detalhesProduto .info1 .preco span:last").text().replace(',', '.'));
+    
+    // Verificar se o produto é Grátis consultando o texto visível
+    let precoTextoVisivel = $("#detalhesProduto .info1 .preco").text().trim();
+    let precoProduto = 0;
+    
+    // Se o texto visível contém "Grátis", não adicionar preço base
+    if (!precoTextoVisivel.includes('Grátis')) {
+        precoProduto = parseFloat($("#detalhesProduto .info1 .preco span:last").text().replace(',', '.')) || 0;
+    }
+    
     let qtdeProduto = $("#detalhesProduto .info3 .qtdeProduto .qtde").val();
     let totalProduto = precoProduto;
 
@@ -1156,8 +1165,14 @@ function totalProduto() {
     totalProduto = parseFloat(totalProduto.toFixed(2));
 
     // Atualizar exibição do preço
-    $('#detalhesProduto .info3 #precoProduto').html((totalProduto * qtdeProduto).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
-    $('#detalhesProduto .info3 .precoProduto').html(totalProduto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }).replace('R$ ', ''));
+    // Se o produto é Grátis e não há adicionais, exibir "Grátis"
+    if (precoProduto === 0 && totalAdicionais === 0) {
+        $('#detalhesProduto .info3 #precoProduto').html('Grátis');
+        $('#detalhesProduto .info3 .precoProduto').html('0.00');
+    } else {
+        $('#detalhesProduto .info3 #precoProduto').html((totalProduto * qtdeProduto).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
+        $('#detalhesProduto .info3 .precoProduto').html(totalProduto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }).replace('R$ ', ''));
+    }
 }
 
 function atualizarResumo() {

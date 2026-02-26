@@ -363,41 +363,55 @@ class PayevoPayment {
     
     while (keepOpen) {
       const result = await Swal.fire({
-        title: '💳 Escanear PIX',
+        title: 'Escanear PIX',
         html: `
-          <div style="text-align: center; padding: 10px;">
-            <p style="color: #666; margin-bottom: 15px; font-size: 14px;">Escaneie o QR Code abaixo com seu celular:</p>
+          <div style="text-align: center; padding: 10px; max-width: 100%;">
+            <style>
+              @media (max-width: 600px) {
+                .swal2-popup {
+                  width: 90vw !important;
+                  padding: 1.25rem 0.5rem !important;
+                }
+                .swal2-title {
+                  font-size: 1.2rem !important;
+                }
+                #swal2-html-container {
+                  padding: 0 !important;
+                }
+              }
+            </style>
+            <p style="color: #666; margin-bottom: 10px; font-size: clamp(12px, 4vw, 14px);">Escaneie o QR Code abaixo com seu celular:</p>
             
-            <img src="${qrImageUrl}" alt="QR Code PIX" style="width: 280px; height: 280px; border: 3px solid #0066cc; border-radius: 10px; margin: 15px 0; background: white; padding: 5px;">
+            <img src="${qrImageUrl}" alt="QR Code PIX" style="width: clamp(200px, 85vw, 280px); height: clamp(200px, 85vw, 280px); border: 3px solid #0066cc; border-radius: 10px; margin: 10px auto; background: white; padding: 5px; display: block;">
             
-            <div style="background: #e8f5e9; padding: 12px; border-radius: 8px; margin: 15px 0; border: 2px solid #077c22;">
-              <p style="color: #077c22; font-weight: bold; font-size: 18px; margin: 0;">Valor: ${valorFormatado}</p>
+            <div style="background: #e8f5e9; padding: 8px; border-radius: 8px; margin: 10px auto; border: 2px solid #077c22;">
+              <p style="color: #077c22; font-weight: bold; font-size: clamp(16px, 5vw, 18px); margin: 0;">Valor: ${valorFormatado}</p>
             </div>
             
-            <p style="color: #666; margin: 20px 0 10px 0; font-size: 14px;">Ou copie a chave PIX:</p>
+            <p style="color: #666; margin: 10px 0 8px 0; font-size: clamp(12px, 4vw, 14px);">Ou copie a chave PIX:</p>
             
             <div style="
               background: #f9f9f9;
-              padding: 15px;
+              padding: 10px;
               border-radius: 8px;
-              margin: 10px 0;
+              margin: 8px 0;
               border: 1px solid #ddd;
               word-break: break-all;
               font-family: 'Courier New', monospace;
-              font-size: 12px;
+              font-size: clamp(10px, 3vw, 12px);
               color: #333;
-              max-height: 100px;
+              max-height: 80px;
               overflow-y: auto;
               text-align: center;
             ">
               <strong>${qrcode}</strong>
             </div>
             
-            <p style="color: #999; font-size: 11px; margin-top: 15px;">
-              ⏰ Expira em: <strong id="timer-display" style="color: #ff0000; font-size: 14px;">30:00</strong>
+            <p style="color: #999; font-size: clamp(10px, 3vw, 11px); margin-top: 8px;">
+              ⏰ Expira em: <strong id="timer-display" style="color: #ff0000; font-size: clamp(12px, 4vw, 14px);">30:00</strong>
             </p>
             
-            <div id="copia-feedback" style="display: none; margin-top: 15px; padding: 10px; background-color: #d4edda; color: #155724; border-radius: 5px; border: 1px solid #c3e6cb; font-weight: bold;">
+            <div id="copia-feedback" style="display: none; margin-top: 8px; padding: 8px; background-color: #d4edda; color: #155724; border-radius: 5px; border: 1px solid #c3e6cb; font-weight: bold; font-size: clamp(11px, 3vw, 13px);">
               ✓ Chave PIX copiada para a área de transferência!
             </div>
           </div>

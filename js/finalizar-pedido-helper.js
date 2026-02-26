@@ -34,27 +34,39 @@ async function finalizar() {
     const entregaResult = await Swal.fire({
       title: '🚚 Entrega',
       html: `
-        <div style="text-align: left; max-width: 450px; margin: 0 auto;">
-          <label style="font-weight: bold; margin-bottom: 15px; display: block;">Selecione o tipo de entrega:</label>
+        <style>
+          @media (max-width: 600px) {
+            .swal2-popup { width: 90vw !important; padding: 12px 10px !important; }
+            .swal2-title { font-size: 1.1rem !important; margin: 0 0 10px 0 !important; }
+            #swal2-html-container { padding: 0 !important; }
+            .entrega-option { margin-bottom: 10px !important; padding: 10px !important; font-size: 13px !important; }
+            .entrega-option label { font-size: 12px !important; }
+            .entrega-option div { margin-top: 3px !important; }
+          }
+        </style>
+        <div style="text-align: left; max-width: 450px; margin: 0 auto; padding: 0;">
+          <label style="font-weight: bold; margin-bottom: 12px; display: block; font-size: clamp(12px, 3vw, 14px);">Selecione o tipo de entrega:</label>
           
-          <div style="margin-bottom: 15px; padding: 12px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; background: white;" id="entrega-rapida-box">
+          <div style="margin-bottom: 12px; padding: 10px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; background: white;" id="entrega-rapida-box" class="entrega-option">
             <input type="radio" id="entrega-tipo-rapida" name="entrega-tipo" value="rapida"> 
-            <label for="entrega-tipo-rapida" style="cursor: pointer; margin-left: 8px; font-weight: bold;">🏃 ENTREGA RÁPIDA</label>
-            <div style="color: #077c22; font-weight: bold; font-size: 16px; margin-top: 5px;">R$ 25,90</div>
-            <div style="color: #666; font-size: 12px;">10 a 20 minutos</div>
+            <label for="entrega-tipo-rapida" style="cursor: pointer; margin-left: 8px; font-weight: bold; font-size: clamp(12px, 3vw, 14px);">🏃 ENTREGA RÁPIDA</label>
+            <div style="color: #077c22; font-weight: bold; font-size: clamp(14px, 4vw, 16px); margin-top: 4px;">R$ 25,90</div>
+            <div style="color: #666; font-size: clamp(11px, 3vw, 12px);">10 a 20 minutos</div>
           </div>
           
-          <div style="margin-bottom: 20px; padding: 12px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; background: white;" id="entrega-normal-box">
+          <div style="margin-bottom: 0; padding: 10px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; background: white;" id="entrega-normal-box" class="entrega-option">
             <input type="radio" id="entrega-tipo-normal" name="entrega-tipo" value="normal"> 
-            <label for="entrega-tipo-normal" style="cursor: pointer; margin-left: 8px; font-weight: bold;">🚚 ENTREGA PADRÃO</label>
-            <div style="color: #077c22; font-weight: bold; font-size: 16px; margin-top: 5px;">R$ 19,90</div>
-            <div style="color: #666; font-size: 12px;">1 a 2 horas</div>
+            <label for="entrega-tipo-normal" style="cursor: pointer; margin-left: 8px; font-weight: bold; font-size: clamp(12px, 3vw, 14px);">🚚 ENTREGA PADRÃO</label>
+            <div style="color: #077c22; font-weight: bold; font-size: clamp(14px, 4vw, 16px); margin-top: 4px;">R$ 19,90</div>
+            <div style="color: #666; font-size: clamp(11px, 3vw, 12px);">1 a 2 horas</div>
           </div>
         </div>
       `,
       confirmButtonText: 'Continuar',
       confirmButtonColor: '#077c22',
       allowOutsideClick: false,
+      width: window.innerWidth < 768 ? '92vw' : 'auto',
+      padding: window.innerWidth < 768 ? '12px 8px' : '20px',
       didOpen: () => {
         const entregaRapida = document.getElementById('entrega-tipo-rapida');
         const entregaNormal = document.getElementById('entrega-tipo-normal');
@@ -120,48 +132,59 @@ async function finalizar() {
     const result = await Swal.fire({
       title: 'Dados para Entrega',
       html: `
-        <div style="text-align: left; padding: 5px; max-height: 70vh; overflow-y: auto;">
-          <div style="margin-bottom: 12px;">
-            <label style="display: block; margin-bottom: 3px; font-weight: bold; font-size: 13px;">Nome Completo *</label>
-            <input id="swal-nome" class="swal2-input" placeholder="Seu nome completo" style="width: 100%; margin: 0; padding: 10px; font-size: 14px; box-sizing: border-box;">
+        <style>
+          @media (max-width: 600px) {
+            .swal2-popup { width: 90vw !important; padding: 12px 10px !important; }
+            .swal2-title { font-size: 1.1rem !important; margin: 0 0 12px 0 !important; }
+            #swal2-html-container { padding: 0 !important; }
+            .delivery-form-field { margin-bottom: 8px !important; }
+            .delivery-form-field label { margin-bottom: 2px !important; font-size: 11px !important; }
+            .delivery-form-field input { padding: 8px 8px !important; font-size: 13px !important; }
+            .swal2-confirm, .swal2-cancel { font-size: 12px !important; padding: 8px 12px !important; }
+          }
+        </style>
+        <div style="text-align: left; padding: 0; max-height: 70vh; overflow-y: auto;">
+          <div style="margin-bottom: 10px;" class="delivery-form-field">
+            <label style="display: block; margin-bottom: 4px; font-weight: bold; font-size: clamp(12px, 3vw, 13px);">Nome Completo *</label>
+            <input id="swal-nome" class="swal2-input" placeholder="Seu nome completo" style="width: 100%; margin: 0; padding: 9px; font-size: clamp(13px, 3.5vw, 14px); box-sizing: border-box;">
           </div>
           
-          <div style="margin-bottom: 12px;">
-            <label style="display: block; margin-bottom: 3px; font-weight: bold; font-size: 13px;">CPF *</label>
-            <input id="swal-cpf" class="swal2-input" placeholder="000.000.000-00" maxlength="14" style="width: 100%; margin: 0; padding: 10px; font-size: 14px; box-sizing: border-box;">
+          <div style="margin-bottom: 10px;" class="delivery-form-field">
+            <label style="display: block; margin-bottom: 4px; font-weight: bold; font-size: clamp(12px, 3vw, 13px);">CPF *</label>
+            <input id="swal-cpf" class="swal2-input" placeholder="000.000.000-00" maxlength="14" style="width: 100%; margin: 0; padding: 9px; font-size: clamp(13px, 3.5vw, 14px); box-sizing: border-box;">
           </div>
           
-          <div style="margin-bottom: 12px;">
-            <label style="display: block; margin-bottom: 3px; font-weight: bold; font-size: 13px;">Telefone/WhatsApp *</label>
-            <input id="swal-telefone" class="swal2-input" placeholder="(00) 00000-0000" maxlength="15" style="width: 100%; margin: 0; padding: 10px; font-size: 14px; box-sizing: border-box;">
+          <div style="margin-bottom: 10px;" class="delivery-form-field">
+            <label style="display: block; margin-bottom: 4px; font-weight: bold; font-size: clamp(12px, 3vw, 13px);">Telefone/WhatsApp *</label>
+            <input id="swal-telefone" class="swal2-input" placeholder="(00) 00000-0000" maxlength="15" style="width: 100%; margin: 0; padding: 9px; font-size: clamp(13px, 3.5vw, 14px); box-sizing: border-box;">
           </div>
           
-          <div style="margin-bottom: 12px;">
-            <label style="display: block; margin-bottom: 3px; font-weight: bold; font-size: 13px;">CEP *</label>
-            <input id="swal-cep" class="swal2-input" placeholder="00000-000" maxlength="9" style="width: 100%; margin: 0; padding: 10px; font-size: 14px; box-sizing: border-box;">
+          <div style="margin-bottom: 10px;" class="delivery-form-field">
+            <label style="display: block; margin-bottom: 4px; font-weight: bold; font-size: clamp(12px, 3vw, 13px);">CEP *</label>
+            <input id="swal-cep" class="swal2-input" placeholder="00000-000" maxlength="9" style="width: 100%; margin: 0; padding: 9px; font-size: clamp(13px, 3.5vw, 14px); box-sizing: border-box;">
           </div>
           
-          <div style="margin-bottom: 12px;">
-            <label style="display: block; margin-bottom: 3px; font-weight: bold; font-size: 13px;">Endereço *</label>
-            <input id="swal-endereco" class="swal2-input" placeholder="Rua, Avenida, etc." style="width: 100%; margin: 0; padding: 10px; font-size: 14px; box-sizing: border-box;">
+          <div style="margin-bottom: 10px;" class="delivery-form-field">
+            <label style="display: block; margin-bottom: 4px; font-weight: bold; font-size: clamp(12px, 3vw, 13px);">Endereço *</label>
+            <input id="swal-endereco" class="swal2-input" placeholder="Rua, Avenida, etc." style="width: 100%; margin: 0; padding: 9px; font-size: clamp(13px, 3.5vw, 14px); box-sizing: border-box;">
           </div>
           
-          <div style="margin-bottom: 12px;">
-            <label style="display: block; margin-bottom: 3px; font-weight: bold; font-size: 13px;">Número *</label>
-            <input id="swal-numero" class="swal2-input" placeholder="Número" style="width: 100%; margin: 0; padding: 10px; font-size: 14px; box-sizing: border-box;">
+          <div style="margin-bottom: 10px;" class="delivery-form-field">
+            <label style="display: block; margin-bottom: 4px; font-weight: bold; font-size: clamp(12px, 3vw, 13px);">Número *</label>
+            <input id="swal-numero" class="swal2-input" placeholder="Número" style="width: 100%; margin: 0; padding: 9px; font-size: clamp(13px, 3.5vw, 14px); box-sizing: border-box;">
           </div>
           
-          <div style="margin-bottom: 12px;">
-            <label style="display: block; margin-bottom: 3px; font-weight: bold; font-size: 13px;">Complemento</label>
-            <input id="swal-complemento" class="swal2-input" placeholder="Apto, Bloco, etc. (opcional)" style="width: 100%; margin: 0; padding: 10px; font-size: 14px; box-sizing: border-box;">
+          <div style="margin-bottom: 10px;" class="delivery-form-field">
+            <label style="display: block; margin-bottom: 4px; font-weight: bold; font-size: clamp(12px, 3vw, 13px);">Complemento</label>
+            <input id="swal-complemento" class="swal2-input" placeholder="Apto, Bloco, etc. (opcional)" style="width: 100%; margin: 0; padding: 9px; font-size: clamp(13px, 3.5vw, 14px); box-sizing: border-box;">
           </div>
           
-          <div style="margin-bottom: 12px;">
-            <label style="display: block; margin-bottom: 3px; font-weight: bold; font-size: 13px;">E-mail</label>
-            <input id="swal-email" class="swal2-input" type="email" placeholder="seu@email.com (opcional)" style="width: 100%; margin: 0; padding: 10px; font-size: 14px; box-sizing: border-box;">
+          <div style="margin-bottom: 8px;" class="delivery-form-field">
+            <label style="display: block; margin-bottom: 4px; font-weight: bold; font-size: clamp(12px, 3vw, 13px);">E-mail</label>
+            <input id="swal-email" class="swal2-input" type="email" placeholder="seu@email.com (opcional)" style="width: 100%; margin: 0; padding: 9px; font-size: clamp(13px, 3.5vw, 14px); box-sizing: border-box;">
           </div>
           
-          <p style="font-size: 11px; color: #666; margin-top: 10px; margin-bottom: 0;">* Campos obrigatórios</p>
+          <p style="font-size: clamp(10px, 2.5vw, 11px); color: #666; margin-top: 6px; margin-bottom: 0;">* Campos obrigatórios</p>
         </div>
       `,
       confirmButtonText: 'Gerar PIX',
@@ -169,8 +192,8 @@ async function finalizar() {
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       cancelButtonColor: '#999',
-      width: window.innerWidth < 768 ? '95%' : '600px',
-      padding: window.innerWidth < 768 ? '15px' : '20px',
+      width: window.innerWidth < 768 ? '92vw' : '600px',
+      padding: window.innerWidth < 768 ? '12px 8px' : '20px',
       allowOutsideClick: false,
       customClass: {
         container: 'swal-mobile-container',
