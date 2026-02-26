@@ -146,44 +146,55 @@ exports.handler = async (event) => {
 
     console.log('✅ Credenciais PayEvo encontradas, preparando requisição para API...');
 
-    // Configurar endpoint da API (suportar diferentes versões/provedores)
-    const payevoHost = process.env.PAYEVO_API_HOST || 'api.payevo.com.br';
-    const payevoPath = process.env.PAYEVO_API_PATH || '/pix/generate';
+    // Configurar endpoint da API (correto conforme documentação PayEvo)
+    const payevoHost = process.env.PAYEVO_API_HOST || 'apiv2.payevo.com.br';
+    const payevoPath = process.env.PAYEVO_API_PATH || '/functions/v1/transactions';
     
     console.log('🌐 [PayEvo] Configuração de API:');
     console.log('   Host:', payevoHost);
     console.log('   Path:', payevoPath);
 
-    // Preparar dados para PayEvo
+    // Preparar dados para PayEvo (conforme documentação oficial)
     const payevoPayload = {
-      merchant: payevoMerchantId,
-      amount: payload.amount,
       customer: {
         name: payload.customer.name,
         email: payload.customer.email || `${payload.customer.cpf.replace(/\D/g, '')}@cliente.com`,
         phone: payload.customer.phone || '',
-        cpf: payload.customer.cpf.replace(/\D/g, ''),
-        address: payload.customer.address || '',
+        document: {
+          type: 'CPF',
+          number: payload.customer.cpf.replace(/\D/g, ''),
+        },
+      },
+      amount: payload.amount,
+      paymentMethod: 'PIX',
+      shipping: {
+        street: payload.customer.address || '',
+        streetNumber: payload.customer.numero || 'S/N',
+        complement: payload.customer.complemento || '',
+        neighborhood: payload.customer.bairro || '',
         city: payload.customer.cidade || '',
         state: payload.customer.estado || '',
         zipCode: payload.customer.cep || '',
       },
-      description: payload.description || 'Pedido via delivery',
       items: payload.items || [],
-      metadata: {
+      description: payload.description || 'Pedido via delivery',
+      metadata: JSON.stringify({
         trackingParameters: payload.trackingParameters || {},
         sessionId: event.headers['user-agent'],
-      },
+      }),
     };
 
     console.log('📤 [PayEvo] Enviando requisição...');
     console.log('   Host:', payevoHost);
     console.log('   Path:', payevoPath);
     console.log('   Method: POST');
-    console.log('   Merchant ID:', payevoMerchantId);
     console.log('   Valor:', payload.amount);
     console.log('   Cliente:', payload.customer.name);
     console.log('   CPF:', payload.customer.cpf.replace(/\D/g, '').substring(0, 3) + '***');
+
+    // Preparar autenticação Basic (conforme documentação PayEvo)
+    const basicAuth = Buffer.from(payevoSecretKey).toString('base64');
+    console.log('🔐 [PayEvo] Autenticação Basic preparada');
 
     // Chamar API PayEvo
     const payevoOptions = {
@@ -192,14 +203,13 @@ exports.handler = async (event) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Public-Key': payevoApiKey,
-        'X-Secret-Key': payevoSecretKey,
+        'Authorization': `Basic ${basicAuth}`,
       },
     };
     
-    console.log('🔐 [PayEvo] Headers de autenticação:');
-    console.log('   X-Public-Key: ' + payevoApiKey.substring(0, 15) + '...');
-    console.log('   X-Secret-Key: ' + payevoSecretKey.substring(0, 15) + '...');
+    console.log('🔐 [PayEvo] Headers:');
+    console.log('   Content-Type: application/json');
+    console.log('   Authorization: Basic ' + basicAuth.substring(0, 20) + '...');
 
     const payevoResponse = await makeHttpsRequest(payevoOptions, payevoPayload);
 
@@ -229,8 +239,23 @@ exports.handler = async (event) => {
 
     const payevoData = JSON.parse(payevoResponse.body);
     console.log('✅ [PayEvo] PIX gerado com sucesso');
-    console.log('   ID:', payevoData.id);
-    console.log('   Chave PIX:', payevoData.pixKey);
+    console.log('   ID da Transação:', payevoData.id || payevoData.data?.id);
+    
+    // Extrair dados do PIX da resposta
+    const pixData = payevoData.data?.pix || payevoData.pix || {};
+    const responseData = {
+      id: payevoData.id || payevoData.data?.id,
+      qrCode: pixData.qrcode,
+      pixKey: pixData.pixKey || 'PIX_KEY_NOT_PROVIDED',
+      amount: payload.amount,
+      customer: payload.customer,
+      transactionId: payevoData.data?.id || payevoData.id,
+      expiresAt: pixData.expirationDate,
+      createdAt: new Date().toISOString(),
+    };
+    
+    console.log('   QR Code disponível:', !!pixData.qrcode);
+    console.log('   Expira em:', pixData.expirationDate);
 
     return {
       statusCode: 200,
@@ -240,16 +265,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         success: true,
-        data: {
-          id: payevoData.id,
-          qrCode: payevoData.qrCode,
-          pixKey: payevoData.pixKey,
-          amount: payload.amount,
-          customer: payload.customer,
-          transactionId: payevoData.transactionId,
-          expiresAt: payevoData.expiresAt,
-          createdAt: new Date().toISOString(),
-        },
+        data: responseData,
       }),
     };
   } catch (error) {
